@@ -157,7 +157,7 @@
 	 */
 	 void ChassisMotorInit(uint8_t mode)
 	 {
-		 	 (chassis_t.pmoter_can,maxion1_t.module_id);//发送复位指令
+		 	 ResetMode(chassis_t.pmoter_can,maxion1_t.module_id);//发送复位指令
 		  ResetMode(chassis_t.pmoter_can,maxion2_t.module_id);//发送复位指令
 		  ResetMode(chassis_t.pmoter_can,maxion3_t.module_id);//发送复位指令
 			osDelay(500);//等待500ms
