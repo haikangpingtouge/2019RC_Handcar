@@ -126,6 +126,8 @@
 	void ResetMode(CAN_HandleTypeDef *hcanx,uint32_t can_rx_id);
 	void ModeSelectionMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t mode);
   void SpeedLoopMode(int16_t pwm,int16_t Speed,uint8_t *data);
+	void ConfigMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t Time,\
+																												uint8_t Ctl1_Ctl2);
 	void MotorInit(CAN_HandleTypeDef *hcanx,uint8_t id,uint8_t mode);
   void MaxionParseData(maxionStruct*maxion,uint8_t *data);
 	void MotorInit(CAN_HandleTypeDef *hcanx,uint8_t id,uint8_t mode);

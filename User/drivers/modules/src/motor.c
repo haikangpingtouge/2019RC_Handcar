@@ -159,10 +159,10 @@
 		* @param   void
 		* @retval  void
 		*/
-		void ResetMode(CAN_HandleTypeDef *hcanx,uint32_t can_rx_id)
+		void ResetMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id)
 		{
 			uint32_t id = reset_fun_e;
-			id |= can_rx_id;
+			id |= rx_id;
 			uint8_t s[8] = {0x55};
 			CanTxMsg(hcanx,id,s);
 		}
@@ -204,7 +204,26 @@
 			TwobyteToByle(pwm,(data));
 			DataFilling((data+1),0x55,8);
 		}
-	
+	/**
+	* @Data    2019-02-17 17:12
+	* @brief   配置指令
+	* @param   void
+	* @retval  void
+	*/
+	void ConfigMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t Time,\
+																													uint8_t Ctl1_Ctl2)
+	{
+		uint32_t id = config_fun_e;
+		id |= rx_id;
+		if((Ctl1_Ctl2 != 0x00)&&(Ctl1_Ctl2 != 0x01))
+    {
+        Ctl1_Ctl2 = 0x00;
+    }
+		uint8_t s[8] = {0x55};
+		s[0] = Time;
+		s[1] = Ctl1_Ctl2;
+		CanTxMsg(hcanx,id,s);
+	}
 	/**
 		* @Data    2019-02-16 14:10
 		* @brief   电机can发送
