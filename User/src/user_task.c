@@ -143,7 +143,7 @@ uint8_t task_on_off = 0;
 			if(task_on_off == ENABLE)
       {
         ChassisControl(&dbus_t);
-				osDelay(3);
+				osDelay(2);
 			}
 			else osDelay(1);
 		}

@@ -8,38 +8,26 @@
 	|           By(GCU The wold of team | 华南理工大学广州学院机器人野狼队)         |
 	|                    https://github.com/GCUWildwolfteam                      |
 	|----------------------------------------------------------------------------|
-	|--FileName    : parse.c                                              
-	|--Version     : v1.0                                                          
-	|--Author      : 海康平头哥                                                     
-	|--Date        : 2019-02-02             
+	|--FileName    : motion_model.h                                                
+	|--Version     : v1.0                                                            
+	|--Author      : 海康平头哥                                                       
+	|--Date        : 2019-02-17               
 	|--Libsupports : 
-	|--Description :                                                     
-	|--FunctionList                                                     
-	|-------1. ....                                                     
-	|          <version>:                                                     
+	|--Description :  各种运动模型算法                                                     
+	|--FunctionList                                                       
+	|-------1. ....                                                       
+	|          <version>:                                                       
 	|     <modify staff>:                                                       
 	|             <data>:                                                       
 	|      <description>:                                                        
 	|-------2. ...                                                       
 	|-----------------------------declaration of end-----------------------------|
  **/
-#include "parse.h" 
-/* -------------- 外部链接 ----------------- */
- extern uint8_t can1_rx[12];
-	/**
-		* @Data    2019-02-14 14:36
-		* @brief   数据解析
-		* @param   void
-		* @retval  void
-		*/
-		void ParseData(void)
-		{
-			uint32_t can_id = 0;
-	  	ByleToMultibyte(&can1_rx[8],&can_id);
-			ChassisParseDate(can_id,can1_rx);
-//			UserCanQueueRX(&hcan1,can1_rx);//cam1接收
-			// ByleToMultibyte(&can1_rx[8],&can_id)
-		}
+#ifndef __MOTION_MODEL_H 
+#define __MOTION_MODEL_H 
+#include "baseclass.h" 
+void ThreeWheelMotionModel(int16_t motorspeed[],float vx,float vy,float w);
+#endif	// __MOTION_MODEL_H
 /*-----------------------------------file of end------------------------------*/
 
 

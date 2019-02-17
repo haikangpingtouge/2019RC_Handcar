@@ -161,10 +161,10 @@
 		*/
 		void ResetMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id)
 		{
-			uint32_t id = reset_fun_e;
-			id |= rx_id;
-			uint8_t s[8] = {0x55};
-			CanTxMsg(hcanx,id,s);
+      uint8_t s[8];
+			rx_id |= reset_fun_e;
+      DataFilling(s,0x55,8);
+			CanTxMsg(hcanx,rx_id,s);
 		}
 	/**
 		* @Data    2019-02-16 16:35
@@ -174,11 +174,11 @@
 		*/
 		void ModeSelectionMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t mode)
 		{
-			uint32_t id = mode_selection_fun_e;
-			id |= rx_id;
-			uint8_t s[8] = {0x55};
+			uint8_t s[8];
+			rx_id |= mode_selection_fun_e;
+      DataFilling(s,0x55,8);
 			s[0] = mode;
-			CanTxMsg(hcanx,id,s);
+			CanTxMsg(hcanx,rx_id,s);
 		}
   /**
 	* @Data    2019-02-16 13:15
@@ -191,7 +191,7 @@
 	{
 		TwobyteToByle(pwm,(data));
 		TwobyteToByle(Speed,(data+2));
-		DataFilling((data+3),0x55,8);
+		DataFilling((data+4),0x55,8);
 	}
 	 /**
 		* @Data    2019-02-16 13:31
@@ -202,7 +202,7 @@
 		void OpenLoopMode(int16_t pwm,uint8_t *data)
 		{
 			TwobyteToByle(pwm,(data));
-			DataFilling((data+1),0x55,8);
+			DataFilling((data+2),0x55,8);
 		}
 	/**
 	* @Data    2019-02-17 17:12
@@ -213,13 +213,14 @@
 	void ConfigMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t Time,\
 																													uint8_t Ctl1_Ctl2)
 	{
+    uint8_t s[8];
 		uint32_t id = config_fun_e;
 		id |= rx_id;
 		if((Ctl1_Ctl2 != 0x00)&&(Ctl1_Ctl2 != 0x01))
     {
         Ctl1_Ctl2 = 0x00;
     }
-		uint8_t s[8] = {0x55};
+      DataFilling(s,0x55,8);
 		s[0] = Time;
 		s[1] = Ctl1_Ctl2;
 		CanTxMsg(hcanx,id,s);
@@ -254,9 +255,9 @@
 		*/
 		void MotorInit(CAN_HandleTypeDef *hcanx,uint8_t id,uint8_t mode)
 		{
-			ResetMode(hcanx,id);//发送复位指令
+//			ResetMode(hcanx,id);//发送复位指令
 			osDelay(500);//等待500ms
-			ModeSelectionMode(hcanx,id,mode);
+//			ModeSelectionMode(hcanx,id,mode);
 			osDelay(500);//等待500ms
 		}
 /* ============================= maxion of end ============================== */

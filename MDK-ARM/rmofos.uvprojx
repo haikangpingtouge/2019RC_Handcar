@@ -637,6 +637,16 @@
               <FileType>5</FileType>
               <FilePath>..\User\drivers\modules\inc\wholepositioning.h</FilePath>
             </File>
+            <File>
+              <FileName>motion_model.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\drivers\counters\src\motion_model.c</FilePath>
+            </File>
+            <File>
+              <FileName>motion_model.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\drivers\counters\inc\motion_model.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

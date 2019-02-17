@@ -34,10 +34,10 @@
 	extern CAN_HandleTypeDef hcan1;
 	extern UART_HandleTypeDef huart6;//串口1
 /* -------------- 私有宏 ----------------- */
-#define MODILE_ID1 1
-#define MODILE_ID2 2
-#define MODILE_ID3 3
-#define SPEED_LOOP_PWM			0//速度模式电流限值
+#define MODILE_ID1 ((MOTOR_CAN_ID_CAL(MOTOR1_GROUP,MOTOR1_NUMBER))|0x0B)//含有运算符的宏一定要加括号
+#define MODILE_ID2 ((MOTOR_CAN_ID_CAL(MOTOR2_GROUP,MOTOR2_NUMBER))|0x0B)
+#define MODILE_ID3 ((MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR3_NUMBER))|0x0B)
+#define SPEED_LOOP_PWM			500//速度模式电流限值
 /*   Group   取值范围 0-7
     Number  取值范围 0-15
 	其中Number==0时，为广播发送*/
@@ -47,6 +47,9 @@
 #define MOTOR2_NUMBER				2//电机2的成员号
 #define MOTOR3_GROUP				0//电机3的组号
 #define MOTOR3_NUMBER				3//电机3的成员号
+
+
+int16_t wheel_speed[3];
 	/**
 	* @Data    2019-01-19 11:45
 	* @brief   底盘数据解析
@@ -66,21 +69,27 @@
 			maxion1_t.real_velocity = 0;
 			maxion1_t.module_id =        \
 		  MOTOR_CAN_ID_CAL(MOTOR1_GROUP,MOTOR1_NUMBER); //电机1发送id
+      maxion1_t.module_rx_id = \
+      (MOTOR_CAN_ID_CAL(MOTOR1_GROUP,MOTOR1_NUMBER))|0x0B; //电机1接收id
 		/* -------- maxion_t2 --------- */
 			maxion2_t.hcanx = NULL;
 			maxion2_t.real_current = 0;
 			maxion2_t.real_velocity = 0;
 			maxion2_t.module_id =        \
 		  MOTOR_CAN_ID_CAL(MOTOR2_GROUP,MOTOR2_NUMBER); //电机2发送id
+      maxion2_t.module_rx_id = \
+     (MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR2_NUMBER))|0x0B; //电机2接收id
 		/* -------- maxion_t3 --------- */
 			maxion3_t.hcanx = NULL;
 			maxion3_t.real_current = 0;
 			maxion3_t.real_velocity = 0;
 	   	maxion3_t.module_id =        \
 		  MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR3_NUMBER); //电机3发送id
+      maxion3_t.module_rx_id = \
+      (MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR3_NUMBER))|0x0B; //电机1接收id
 			UserCanConfig(chassis_t.pmoter_can);
 			WholePositioningInit(&wholePosition_t, &huart6);//全场定位初始化
-      ChassisMotorInit(openloop_mode_e);
+      ChassisMotorInit(velocity_mode_e);
 	}
 	/**
 	* @Data    2019-01-19 12:01
@@ -90,7 +99,7 @@
 	*/
 	HAL_StatusTypeDef ChassisParseDate(uint32_t id,uint8_t *data)
 	{
-   	// MotorParseDate(id,data);//can数据解析
+   	 MotorParseDate(id,data);//can数据解析
 		ParseWholePositioningInfo(chassis_t.pwholePosition_t);//全场定位数据解析
     return HAL_OK;
 	}
@@ -128,7 +137,8 @@
 	*/
 	void ChassisControl(dbusStruct* rc)
 	{
-//		MotorCanTx(20,20,20);
+		ThreeWheelMotionModel(wheel_speed,rc->ch1,rc->ch2,rc->ch3);
+    MotorCanTx(wheel_speed[0],wheel_speed[1],wheel_speed[2]);
 	}
 	/**
 	* @Data    2019-02-15 14:15
@@ -157,14 +167,22 @@
 	 */
 	 void ChassisMotorInit(uint8_t mode)
 	 {
-		 	 ResetMode(chassis_t.pmoter_can,maxion1_t.module_id);//发送复位指令
+		 	ResetMode(chassis_t.pmoter_can,maxion1_t.module_id);//发送复位指令
 		  ResetMode(chassis_t.pmoter_can,maxion2_t.module_id);//发送复位指令
 		  ResetMode(chassis_t.pmoter_can,maxion3_t.module_id);//发送复位指令
 			osDelay(500);//等待500ms
-			ModeSelectionMode(chassis_t.pmoter_can,maxion1_t.module_id,mode);
-			ModeSelectionMode(chassis_t.pmoter_can,maxion2_t.module_id,mode);
-			ModeSelectionMode(chassis_t.pmoter_can,maxion3_t.module_id,mode);
+			ConfigMode(chassis_t.pmoter_can,maxion1_t.module_id,2,0);
+			ConfigMode(chassis_t.pmoter_can,maxion2_t.module_id,2,0);
+			ConfigMode(chassis_t.pmoter_can,maxion3_t.module_id,2,0);
+			osDelay(1);//等待500ms
+			/* ------ 选择进入模式 ------- */
+			ModeSelectionMode(chassis_t.pmoter_can,(maxion1_t.module_id),mode);
+			ModeSelectionMode(chassis_t.pmoter_can,(maxion2_t.module_id),mode);
+			ModeSelectionMode(chassis_t.pmoter_can,(maxion3_t.module_id),mode);
 			osDelay(500);//等待500ms
+     maxion1_t.module_id |= (mode+1);
+     maxion2_t.module_id |= (mode+1);
+     maxion3_t.module_id |= (mode+1);
 		 	// MotorInit(chassis_t.pmoter_can,maxion1_t.module_id,mode);//电机1初始化
 			// MotorInit(chassis_t.pmoter_can,maxion2_t.module_id,mode);//电机2初始化
 			// MotorInit(chassis_t.pmoter_can,maxion3_t.module_id,mode);//电机3初始化

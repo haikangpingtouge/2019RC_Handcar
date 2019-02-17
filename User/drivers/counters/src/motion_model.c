@@ -8,12 +8,12 @@
 	|           By(GCU The wold of team | 华南理工大学广州学院机器人野狼队)         |
 	|                    https://github.com/GCUWildwolfteam                      |
 	|----------------------------------------------------------------------------|
-	|--FileName    : parse.c                                              
+	|--FileName    : motion_model.c                                              
 	|--Version     : v1.0                                                          
 	|--Author      : 海康平头哥                                                     
-	|--Date        : 2019-02-02             
+	|--Date        : 2019-02-17             
 	|--Libsupports : 
-	|--Description :                                                     
+	|--Description :各种运动模型算法                                                     
 	|--FunctionList                                                     
 	|-------1. ....                                                     
 	|          <version>:                                                     
@@ -23,23 +23,37 @@
 	|-------2. ...                                                       
 	|-----------------------------declaration of end-----------------------------|
  **/
-#include "parse.h" 
-/* -------------- 外部链接 ----------------- */
- extern uint8_t can1_rx[12];
+#include "motion_model.h" 
+#include "Math.h"
+/* ======================== 全向轮三轮运动模型 of begin ======================= */
+//	static float value[3] = {0};
+#define VX_VALUE           (0.5f)
+#define VY_VALUE           (sqrt(3)/2.f)      
+#define L_value            (350*0.01f)  
+	// /**
+	// 	* @Data    2019-02-17 21:24
+	// 	* @brief  获取轮子半径长度，场地坐标和机器人坐标角度误差
+	// 	* @param   void
+	// 	* @retval  void
+	// 	*/
+	// 	void GetRadiusAndTheta(uint8_t radius,char theta)
+	// 	{
+	// 		value[V_X] = (float)(-cos(60+theta));
+
+	// 	}
 	/**
-		* @Data    2019-02-14 14:36
-		* @brief   数据解析
+		* @Data    2019-02-17 20:17
+		* @brief  全向轮三轮底盘运动模型
 		* @param   void
 		* @retval  void
 		*/
-		void ParseData(void)
+		void ThreeWheelMotionModel(int16_t motorspeed[],float vx,float vy,float w)
 		{
-			uint32_t can_id = 0;
-	  	ByleToMultibyte(&can1_rx[8],&can_id);
-			ChassisParseDate(can_id,can1_rx);
-//			UserCanQueueRX(&hcan1,can1_rx);//cam1接收
-			// ByleToMultibyte(&can1_rx[8],&can_id)
+			motorspeed[0] = (int16_t)(-VX_VALUE*vx + VY_VALUE*vy + L_value*w);
+			motorspeed[1] = (int16_t)(-VX_VALUE*vx - VY_VALUE*vy + L_value*w);
+			motorspeed[2] = (vx + L_value*w);
 		}
+/* ======================== 全向轮三轮运动模型 of end ======================== */
 /*-----------------------------------file of end------------------------------*/
 
 

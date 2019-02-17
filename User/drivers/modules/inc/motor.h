@@ -117,7 +117,8 @@
 		int16_t real_current; //真实电流
 		int16_t real_position;//真实角度
 		int16_t real_velocity;//真实速度
-		int16_t module_id;
+		uint32_t module_id;
+    uint32_t module_rx_id;//电机数据接收id
 		CAN_HandleTypeDef* hcanx;
 	}maxionStruct;
 	/* -------------- 公有宏 ----------------- */
@@ -125,12 +126,12 @@
 						((((group)<<8)|((number)<<4)))	//电机can 发送id计算
 	void ResetMode(CAN_HandleTypeDef *hcanx,uint32_t can_rx_id);
 	void ModeSelectionMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t mode);
+	void OpenLoopMode(int16_t pwm,uint8_t *data);
   void SpeedLoopMode(int16_t pwm,int16_t Speed,uint8_t *data);
 	void ConfigMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t Time,\
 																												uint8_t Ctl1_Ctl2);
 	void MotorInit(CAN_HandleTypeDef *hcanx,uint8_t id,uint8_t mode);
   void MaxionParseData(maxionStruct*maxion,uint8_t *data);
-	void MotorInit(CAN_HandleTypeDef *hcanx,uint8_t id,uint8_t mode);
 /* =========================== maxion of end =========================== */
 
 /* ============================= RM6623 of begin ============================ */
