@@ -26,33 +26,55 @@
 #include "motion_model.h" 
 #include "Math.h"
 /* ======================== 全向轮三轮运动模型 of begin ======================= */
-//	static float value[3] = {0};
-#define VX_VALUE           (0.5f)
-#define VY_VALUE           (sqrt(3)/2.f)      
-#define L_value            (350*0.01f)  
-	// /**
-	// 	* @Data    2019-02-17 21:24
-	// 	* @brief  获取轮子半径长度，场地坐标和机器人坐标角度误差
-	// 	* @param   void
-	// 	* @retval  void
-	// 	*/
-	// 	void GetRadiusAndTheta(uint8_t radius,char theta)
-	// 	{
-	// 		value[V_X] = (float)(-cos(60+theta));
-
-	// 	}
+#define COS_THETA 				 0
+#define SIN_THETA 			   1
+#define COS_60_MIN_THETA 	 2
+#define SIN_60_MIN_THETA 	 3
+#define COS_60_ADD_THETA 	 4
+#define SIN_60_ADD_THETA	 5
+#define RADIUS             6
+float value[7];
 	/**
-		* @Data    2019-02-17 20:17
-		* @brief  全向轮三轮底盘运动模型
-		* @param   void
-		* @retval  void
-		*/
-		void ThreeWheelMotionModel(int16_t motorspeed[],float vx,float vy,float w)
-		{
-			motorspeed[0] = (int16_t)(-VX_VALUE*vx + VY_VALUE*vy + L_value*w);
-			motorspeed[1] = (int16_t)(-VX_VALUE*vx - VY_VALUE*vy + L_value*w);
-			motorspeed[2] = (vx + L_value*w);
-		}
+	* @Data    2019-02-17 21:24
+	* @brief  获取轮子半径长度，场地坐标和机器人坐标角度误差,计算运动模型相关参数
+	* @param   uint8_t radius  轮子为圆的半径
+	* @param   char theta 场地坐标和机器人坐标角度误差 
+	* @retval  void
+	*/
+	void GetThreeMotionModeData(uint8_t radius,float theta)
+	{
+    //cos等运算不准确
+//		value[COS_THETA] = cos(theta);
+//	 	value[SIN_THETA] = sin(theta);
+//	 	value[COS_60_MIN_THETA] = -cos((60 - theta));
+//	 	value[SIN_60_MIN_THETA] = sin((60 - theta));
+//	 	value[COS_60_ADD_THETA] = -cos((60 + theta));
+//	 	value[SIN_60_ADD_THETA] = -sin((60 + theta));
+//	 	value[RADIUS] = radius;
+    value[COS_THETA] = 1;
+	 	value[SIN_THETA] = 0;
+	 	value[COS_60_MIN_THETA] = -0.5;
+	 	value[SIN_60_MIN_THETA] = 1.732050;
+	 	value[COS_60_ADD_THETA] = -0.5;
+	 	value[SIN_60_ADD_THETA] = -1.732050;
+	 	value[RADIUS] = radius;
+	}
+	/**
+	* @Data    2019-02-17 20:17
+	* @brief  全向轮三轮底盘运动模型
+	* @param   void
+	* @retval  void
+	*/
+	void ThreeWheelMotionModel(int16_t *motorspeed,const int16_t vx,const \
+																								int16_t vy,const int16_t w)
+	{
+  	*motorspeed = (int16_t)(value[COS_THETA]*vx + value[SIN_THETA]*vy + \
+																									value[RADIUS]*w);
+		*(motorspeed+1) = (int16_t)(value[COS_60_MIN_THETA]*vx + \
+																value[SIN_60_MIN_THETA]*vy + value[RADIUS]*w);
+		*(motorspeed+2) = (int16_t)(value[COS_60_ADD_THETA]*vx + \
+																value[SIN_60_ADD_THETA]*vy + value[RADIUS]*w);
+	}
 /* ======================== 全向轮三轮运动模型 of end ======================== */
 /*-----------------------------------file of end------------------------------*/
 

@@ -24,7 +24,6 @@
  **/
 #include "counters.h" 
 #include <Math.h>
-
 /* ===================== Bezier(二阶贝塞尔曲线) of begin ===================== */
 	/* -------------------------------- begin  -------------------------------- */
 		/**
@@ -36,20 +35,19 @@
 		* @retval  float t;  //曲线变化
 		*/
 	/* -------------------------------- end ----------------------------------- */
-//		float Bezier(int x,int y)
-//		{
-//			float t;  //曲线变化
-//			int x0,x1,y0,y1,x2,y2;  //P0,P1,P3点
-//			int A ,B,C;//二阶方程  At^2+Bt+C=0
-//			int temp=0;  //临时数据 //确定三个点，预先算出temp
-//			A = x2-x0-x1;
-//			B = 2*x1;
-//			C = x0-x;
-//            temp = sqrt(B^2-4*A*C);  //确定三个点，预先算出temp
-//			t = (-B + temp)/(2*A);
-
-//			return t;
-//		}
+		float Bezier(int x,int y)
+		{
+			float t;  //曲线变化
+			int x0,x1,y0,y1,x2,y2;  //P0,P1,P3点
+			int A ,B,C;//二阶方程  At^2+Bt+C=0
+			int temp=0;  //临时数据 //确定三个点，预先算出temp
+			A = x2-x0-x1;
+			B = 2*x1;
+			C = x0-x;
+      temp = sqrt(B^2-4*A*C);  //确定三个点，预先算出temp
+			t = (-B + temp)/(2*A);
+			return t;
+		}
 		
    
 /* ====================== Bezier(二阶贝塞尔曲线) of end ====================== */

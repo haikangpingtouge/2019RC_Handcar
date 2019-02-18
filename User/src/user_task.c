@@ -73,7 +73,7 @@ uint8_t task_on_off = 0;
 			osThreadDef(ledTask, StartLedTask, osPriorityNormal, 0,128);
       startLedTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 			/* ------ 底盘任务 ------- */
-			osThreadDef(chassisTask, StartChassisTask, osPriorityNormal, 0, 512);
+			osThreadDef(chassisTask, StartChassisTask, osPriorityNormal, 0, 1024);
      startChassisTaskHandle = osThreadCreate(osThread(chassisTask), NULL);
 			// /* ------ 云台任务 ------- */
 			// osThreadDef(gimbalTask, StartGimbalTask, osPriorityNormal, 0, 640);

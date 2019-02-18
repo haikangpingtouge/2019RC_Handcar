@@ -80,12 +80,16 @@ uint8_t databuff[21];//数据接收
 		{
 		dbs->ch1 = (databuff[0] | databuff[1]<<8) & 0x07FF;
 		dbs->ch1 -= 1024;
+    dbs->ch1 = DbusAntiShake(20,dbs->ch1);
 		dbs->ch2 = (databuff[1]>>3 | databuff[2]<<5 ) & 0x07FF;
 		dbs->ch2 -= 1024;
+    dbs->ch2 = DbusAntiShake(20,dbs->ch2);
 		dbs->ch3 = (databuff[2]>>6 | databuff[3]<<2 | databuff[4]<<10) & 0x07FF;
 		dbs->ch3 -= 1024;
+    dbs->ch3 = DbusAntiShake(20,dbs->ch3);
 		dbs->ch4 = (databuff[4]>>1 | databuff[5]<<7) & 0x07FF;		
 		dbs->ch4 -= 1024;
+    dbs->ch4 = DbusAntiShake(20,dbs->ch4);
 		
 		dbs->switch_left = ( (databuff[5] >> 4)& 0x000C ) >> 2;
 		dbs->switch_right =  (databuff[5] >> 4)& 0x0003 ;

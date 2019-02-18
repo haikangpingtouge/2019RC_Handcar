@@ -26,7 +26,9 @@
 #ifndef __MOTION_MODEL_H 
 #define __MOTION_MODEL_H 
 #include "baseclass.h" 
-void ThreeWheelMotionModel(int16_t motorspeed[],float vx,float vy,float w);
+	void GetThreeMotionModeData(uint8_t radius,float theta);
+	void ThreeWheelMotionModel(int16_t *motorspeed,const int16_t vx,const \
+                                                  int16_t vy,const int16_t w);
 #endif	// __MOTION_MODEL_H
 /*-----------------------------------file of end------------------------------*/
 
