@@ -44,6 +44,7 @@
 	#define LIMIT_MAX									0x0DU     //最大限幅
 	#define LIMIT_MIN									0x0EU     //最小限幅
 	float Bezier(int x,int y);
+	int16_t GetLengthForTwopoint(const int16_t *Q1,const int16_t *Q2);
 /* -------------- 位置式pid ----------------- */
 	typedef struct postionPidStruct
 	{

@@ -37,7 +37,7 @@
 #define MODILE_ID1 ((MOTOR_CAN_ID_CAL(MOTOR1_GROUP,MOTOR1_NUMBER))|0x0B)//含有运算符的宏一定要加括号
 #define MODILE_ID2 ((MOTOR_CAN_ID_CAL(MOTOR2_GROUP,MOTOR2_NUMBER))|0x0B)
 #define MODILE_ID3 ((MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR3_NUMBER))|0x0B)
-#define SPEED_LOOP_PWM			1000//速度模式电流限值
+#define SPEED_LOOP_PWM			3000//速度模式电流限值
 /*   Group   取值范围 0-7
     Number  取值范围 0-15
 	其中Number==0时，为广播发送*/
@@ -139,7 +139,7 @@ int16_t wheel_speed[3];
 	void ChassisControl(dbusStruct* rc)
 	{
 		
-		ThreeWheelMotionModel(wheel_speed,-rc->ch1,-rc->ch2,-rc->ch3);
+		ThreeWheelMotionModel(wheel_speed,-4*rc->ch1,-4*rc->ch2,-4*rc->ch3);
     MotorCanTx(wheel_speed[0],wheel_speed[1],wheel_speed[2]);
 	}
 	/**

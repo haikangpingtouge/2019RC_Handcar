@@ -103,6 +103,24 @@ uint8_t databuff[21];//数据接收
 		
 		dbs->keyBoard.key_code 	= databuff[14] | databuff[15] << 8; //key broad code
 		}
+		else
+		{
+		dbs->ch1 = 0;
+		dbs->ch2 = 0;
+		dbs->ch3 = 0;
+		dbs->ch4 = 0;
+ 
+		dbs->switch_left = 0;
+		dbs->switch_right = 0;
+		
+		dbs->mouse.x = 0;
+		dbs->mouse.y = 0;
+		dbs->mouse.z = 0;
+		
+		dbs->mouse.press_left	= 0;
+		dbs->mouse.press_right	= 0;
+		dbs->keyBoard.key_code	= 0;
+		}
 	}
 	/**
 		* @Data    2019-02-14 21:06
