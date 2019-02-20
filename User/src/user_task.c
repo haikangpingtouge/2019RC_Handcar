@@ -34,11 +34,13 @@ extern CAN_HandleTypeDef hcan1;
 	osThreadId startLedTaskHandle;
 	osThreadId startChassisTaskHandle;
 	osThreadId startGimbalTaskHandle;
+	osThreadId startRcChassisTaskHandle; //遥控模式
 /* ----------------- 任务钩子函数 -------------------- */
 	void StartSysInitTask(void const *argument);
 	void StartParseTask(void const *argument);
 	void StartLedTask(void const *argument);
 	void StartChassisTask(void const *argument);
+	void StartRcChassisTask(void const *argument);//遥控模式
 	// void StartGimbalTask(void const *argument);
 /* ----------------- 任务信号量 -------------------- */
 static uint8_t parse_task_status = 0;//数据解析任务工作状态标志
@@ -72,9 +74,12 @@ uint8_t task_on_off = 0;
 			/* -------- led灯提示任务 --------- */
 			osThreadDef(ledTask, StartLedTask, osPriorityNormal, 0,128);
       startLedTaskHandle = osThreadCreate(osThread(ledTask), NULL);
-			/* ------ 底盘任务 ------- */
+			/* ------ 底盘自动模式任务 ------- */
 			osThreadDef(chassisTask, StartChassisTask, osPriorityNormal, 0, 1024);
      startChassisTaskHandle = osThreadCreate(osThread(chassisTask), NULL);
+		 /* ------ 底盘遥控模式任务 ------- */
+		 	osThreadDef(rcChassisTask, StartrcChassisTask, osPriorityNormal, 0, 1024);
+     startRcChassisTaskHandle = osThreadCreate(osThread(rcChassisTask), NULL);
 			// /* ------ 云台任务 ------- */
 			// osThreadDef(gimbalTask, StartGimbalTask, osPriorityNormal, 0, 640);
       // startGimbalTaskHandle = osThreadCreate(osThread(gimbalTask), NULL);
@@ -130,7 +135,7 @@ uint8_t task_on_off = 0;
 	}
 /**
 	* @Data    2019-01-27 17:54
-	* @brief   底盘任务钩子函数
+	* @brief   自动底盘任务钩子函数
 	* @param   argument: Not used
 	* @retval  void
 	*/
@@ -143,6 +148,24 @@ uint8_t task_on_off = 0;
 			if(task_on_off == ENABLE)
       {
         ChassisControl(&dbus_t);
+				osDelay(2);
+			}
+			else osDelay(1);
+		}
+	}
+/**
+	* @Data    2019-01-27 17:54
+	* @brief   自动底盘任务钩子函数
+	* @param   argument: Not used
+	* @retval  void
+	*/
+	void StartRcChassisTask(void const *argument)
+	{
+ 		for (;;)
+		{  
+			if(task_on_off == ENABLE)
+      {
+        RcChassisControl(&dbus_t);
 				osDelay(2);
 			}
 			else osDelay(1);

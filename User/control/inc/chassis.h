@@ -42,6 +42,7 @@ HAL_StatusTypeDef ChassisParseDate(uint32_t id,uint8_t *data);
 HAL_StatusTypeDef MotorParseDate(uint32_t id,uint8_t *data);
 void MotorCanTx(int16_t w1,int16_t w2,int16_t w3);
 void ChassisControl(dbusStruct* rc);
+void RcChassisControl(const dbusStruct* rc);
 void ChassisMotorInit(uint8_t mode);
 #endif	// __CHASSIS_H
 	
