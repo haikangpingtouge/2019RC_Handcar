@@ -158,7 +158,7 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>chassis_t,0x10</ItemText>
+          <ItemText>chassis_t,0x0A</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
@@ -224,6 +224,16 @@
           <count>14</count>
           <WinNumber>1</WinNumber>
           <ItemText>value</ItemText>
+        </Ww>
+        <Ww>
+          <count>15</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>auto_chassis_task_status</ItemText>
+        </Ww>
+        <Ww>
+          <count>16</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>rc_chassis_task_status</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -899,7 +909,7 @@
   </Group>
 
   <Group>
-    <GroupName>user/comtrol</GroupName>
+    <GroupName>user/app</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -911,7 +921,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\src\chassis.c</PathWithFileName>
+      <PathWithFileName>..\User\app\src\chassis.c</PathWithFileName>
       <FilenameWithoutPath>chassis.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -919,24 +929,24 @@
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>49</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\inc\chassis.h</PathWithFileName>
-      <FilenameWithoutPath>chassis.h</FilenameWithoutPath>
+      <PathWithFileName>..\User\app\src\gimbal.c</PathWithFileName>
+      <FilenameWithoutPath>gimbal.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>50</FileNumber>
-      <FileType>5</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\inc\gimbal.h</PathWithFileName>
-      <FilenameWithoutPath>gimbal.h</FilenameWithoutPath>
+      <PathWithFileName>..\User\app\src\parse.c</PathWithFileName>
+      <FilenameWithoutPath>parse.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -947,8 +957,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\src\gimbal.c</PathWithFileName>
-      <FilenameWithoutPath>gimbal.c</FilenameWithoutPath>
+      <PathWithFileName>..\User\app\src\rc_chassis.c</PathWithFileName>
+      <FilenameWithoutPath>rc_chassis.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -959,8 +969,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\src\parse.c</PathWithFileName>
-      <FilenameWithoutPath>parse.c</FilenameWithoutPath>
+      <PathWithFileName>..\User\app\src\send_message.c</PathWithFileName>
+      <FilenameWithoutPath>send_message.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -971,20 +981,20 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\inc\parse.h</PathWithFileName>
-      <FilenameWithoutPath>parse.h</FilenameWithoutPath>
+      <PathWithFileName>..\User\app\inc\chassis.h</PathWithFileName>
+      <FilenameWithoutPath>chassis.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>8</GroupNumber>
       <FileNumber>54</FileNumber>
-      <FileType>1</FileType>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\src\send_message.c</PathWithFileName>
-      <FilenameWithoutPath>send_message.c</FilenameWithoutPath>
+      <PathWithFileName>..\User\app\inc\gimbal.h</PathWithFileName>
+      <FilenameWithoutPath>gimbal.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -995,52 +1005,112 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\control\inc\send_message.h</PathWithFileName>
+      <PathWithFileName>..\User\app\inc\parse.h</PathWithFileName>
+      <FilenameWithoutPath>parse.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>8</GroupNumber>
+      <FileNumber>56</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\User\app\inc\rc_chassis.h</PathWithFileName>
+      <FilenameWithoutPath>rc_chassis.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>8</GroupNumber>
+      <FileNumber>57</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\User\app\inc\send_message.h</PathWithFileName>
       <FilenameWithoutPath>send_message.h</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>8</GroupNumber>
+      <FileNumber>58</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\User\app\src\auto_chassis.c</PathWithFileName>
+      <FilenameWithoutPath>auto_chassis.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>8</GroupNumber>
+      <FileNumber>59</FileNumber>
+      <FileType>5</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\User\app\inc\auto_chassis.h</PathWithFileName>
+      <FilenameWithoutPath>auto_chassis.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
   </Group>
 
   <Group>
-    <GroupName>user</GroupName>
+    <GroupName>user_task</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>9</GroupNumber>
-      <FileNumber>56</FileNumber>
+      <FileNumber>60</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\src\user.c</PathWithFileName>
+      <PathWithFileName>..\User\user_task\src\sys_task.c</PathWithFileName>
+      <FilenameWithoutPath>sys_task.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>9</GroupNumber>
+      <FileNumber>61</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\User\user_task\src\user.c</PathWithFileName>
       <FilenameWithoutPath>user.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>9</GroupNumber>
-      <FileNumber>57</FileNumber>
-      <FileType>1</FileType>
+      <FileNumber>62</FileNumber>
+      <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\src\user_task.c</PathWithFileName>
-      <FilenameWithoutPath>user_task.c</FilenameWithoutPath>
+      <PathWithFileName>..\User\user_task\inc\sys_task.h</PathWithFileName>
+      <FilenameWithoutPath>sys_task.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>9</GroupNumber>
-      <FileNumber>58</FileNumber>
+      <FileNumber>63</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\User\inc\user_task.h</PathWithFileName>
-      <FilenameWithoutPath>user_task.h</FilenameWithoutPath>
+      <PathWithFileName>..\User\user_task\inc\user.h</PathWithFileName>
+      <FilenameWithoutPath>user.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

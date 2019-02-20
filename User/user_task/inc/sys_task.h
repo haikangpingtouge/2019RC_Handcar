@@ -8,7 +8,7 @@
 	|            By(GCU The wold of team | 华南理工大学广州学院机器人野狼队)        |
 	|                   https://github.com/GCUWildwolfteam                       |
 	|----------------------------------------------------------------------------|
-	|--FileName    : user_task.h                                                
+	|--FileName    : sys_task.h                                                
 	|--Version     : v1.0                                                            
 	|--Author      : 海康平头哥                                                       
 	|--Date        : 2019-01-15               
@@ -23,11 +23,12 @@
 	|-------2. ...                                                       
 	|------------------------------declaration of end----------------------------|
  **/
-#ifndef __USER_TASK_H 
-#define __USER_TASK_H 
-#include "DJI_dbus.h"
+#ifndef __SYS_TASK_H 
+#define __SYS_TASK_H 
+#include "auto_chassis.h" 
+#include "rc_chassis.h" 
 #include "leds_tip.h" 
-#include "parse.h"
+#include "parse.h" 
 void SysInitCreate(void);
 #endif	// __USER_TASK_H
 /*----------------------------------file of end-------------------------------*/

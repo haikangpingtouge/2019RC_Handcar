@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F427xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;     ../Drivers/STM32F4xx_HAL_Driver/Inc;     ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;     ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;     ../Drivers/CMSIS/Device/ST/STM32F4xx/Include;     ../Middlewares/Third_Party/FreeRTOS/Source/include;     ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;     ../Drivers/CMSIS/Include;     ..\User\inc;     ..\User\drivers\modules\inc;     ..\User\drivers\counters\inc;     ..\User\drivers\data_structure\inc;     ..\User\bsp\inc;     ..\User\control\inc</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/CMSIS/Include;..\User\user_task\inc;..\User\drivers\modules\inc;..\User\drivers\counters\inc;..\User\drivers\data_structure\inc;..\User\bsp\inc;..\User\app\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -650,67 +650,92 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>user/comtrol</GroupName>
+          <GroupName>user/app</GroupName>
           <Files>
             <File>
               <FileName>chassis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\control\src\chassis.c</FilePath>
-            </File>
-            <File>
-              <FileName>chassis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\User\control\inc\chassis.h</FilePath>
-            </File>
-            <File>
-              <FileName>gimbal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\User\control\inc\gimbal.h</FilePath>
+              <FilePath>..\User\app\src\chassis.c</FilePath>
             </File>
             <File>
               <FileName>gimbal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\control\src\gimbal.c</FilePath>
+              <FilePath>..\User\app\src\gimbal.c</FilePath>
             </File>
             <File>
               <FileName>parse.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\control\src\parse.c</FilePath>
+              <FilePath>..\User\app\src\parse.c</FilePath>
             </File>
             <File>
-              <FileName>parse.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\User\control\inc\parse.h</FilePath>
+              <FileName>rc_chassis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\app\src\rc_chassis.c</FilePath>
             </File>
             <File>
               <FileName>send_message.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\control\src\send_message.c</FilePath>
+              <FilePath>..\User\app\src\send_message.c</FilePath>
+            </File>
+            <File>
+              <FileName>chassis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\app\inc\chassis.h</FilePath>
+            </File>
+            <File>
+              <FileName>gimbal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\app\inc\gimbal.h</FilePath>
+            </File>
+            <File>
+              <FileName>parse.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\app\inc\parse.h</FilePath>
+            </File>
+            <File>
+              <FileName>rc_chassis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\app\inc\rc_chassis.h</FilePath>
             </File>
             <File>
               <FileName>send_message.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\User\control\inc\send_message.h</FilePath>
+              <FilePath>..\User\app\inc\send_message.h</FilePath>
+            </File>
+            <File>
+              <FileName>auto_chassis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\app\src\auto_chassis.c</FilePath>
+            </File>
+            <File>
+              <FileName>auto_chassis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\app\inc\auto_chassis.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>user</GroupName>
+          <GroupName>user_task</GroupName>
           <Files>
+            <File>
+              <FileName>sys_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\user_task\src\sys_task.c</FilePath>
+            </File>
             <File>
               <FileName>user.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\src\user.c</FilePath>
+              <FilePath>..\User\user_task\src\user.c</FilePath>
             </File>
             <File>
-              <FileName>user_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\User\src\user_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>user_task.h</FileName>
+              <FileName>sys_task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\User\inc\user_task.h</FilePath>
+              <FilePath>..\User\user_task\inc\sys_task.h</FilePath>
+            </File>
+            <File>
+              <FileName>user.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\user_task\inc\user.h</FilePath>
             </File>
           </Files>
         </Group>

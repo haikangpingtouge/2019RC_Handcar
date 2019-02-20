@@ -48,8 +48,6 @@
 #define MOTOR3_GROUP				0//电机3的组号
 #define MOTOR3_NUMBER				3//电机3的成员号
 
-
-int16_t wheel_speed[3];
 	/**
 	* @Data    2019-01-19 11:45
 	* @brief   底盘数据解析
@@ -130,32 +128,6 @@ int16_t wheel_speed[3];
 		}
     return HAL_OK;
 	}
-/**
-	* @Data    2019-02-16 09:53
-	* @brief   自动底盘控制服务函数
-	* @param   void
-	* @retval  void
-	*/
-	void ChassisControl(dbusStruct* rc)
-	{
-		
-		ThreeWheelMotionModel(wheel_speed,-4*rc->ch1,-4*rc->ch2,-4*rc->ch3);
-    MotorCanTx(wheel_speed[0],wheel_speed[1],wheel_speed[2]);
-	}
-	/**
-		* @Data    2019-02-20 13:31
-		* @brief   手动底盘控制服务函数
-		* @param   void
-		* @retval  void
-		*/
-		void RcChassisControl(const dbusStruct* rc)
-		{
-			int16_t temp_wheel_speed[3];
-			/* ------ 运动模型 ------- */
-			ThreeWheelMotionModel(temp_wheel_speed,-4*rc->ch1,-4*rc->ch2,-4*rc->ch3);
-			/* ------ 速度分解后can发送 ------- */		
-   	  MotorCanTx(wheel_speed[0],wheel_speed[1],wheel_speed[2]);
-		}
 	/**
 	* @Data    2019-02-15 14:15
 	* @brief   速度环数据发送

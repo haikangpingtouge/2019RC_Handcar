@@ -7,13 +7,12 @@
 * MDK-ARM （keil工程文件和编译文件）
 * User（用户层）
   + bsp (用户底层配置层)
-    + drivers（用户模块设备层）
+  + drivers（用户模块设备层）
     - counters(控制器等算法)
     - data_struture(用户自定义数据结构)
     - modules（模块和外设）
-  + control（控制层）
-  + inc（应用层头文件）
-  + src（应用层源文件）
+  + app（应用控制层）
+	+ user_task(用户任务层)
 * Inc（主函数和中断层头文件）
 * Src（主函数和中断层源文件）
 
@@ -52,7 +51,7 @@ can|can中断
 
 模块设备|模块名称
 -|-
-电机|6623  3508  2006
+电机|6623  3508  2006	maxion
 遥控|大疆遥控dbus
 
 ## 数据结构和算法（data_struture，counters）
