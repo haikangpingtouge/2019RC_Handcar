@@ -34,6 +34,21 @@
 		{
 			SysInitCreate();
 		}
+	/**
+		* @Data    2019-02-20 21:11
+		* @brief   用户IO口设置
+		* @param   void
+		* @retval  void
+		*/
+		void UserIOInit(void)
+		{
+	#if RM_OLD_BOARD
+			HAL_GPIO_DeInit(GPIOE, LED5_Pin|LED1_Pin|LED3_Pin|LED6_Pin 
+                                     |LED2_Pin|LED4_Pin|LED7_Pin);
+		 HAL_GPIO_DeInit(LASER_GPIO_Port,LASER_Pin);
+	#endif 
+
+		}
 /*-----------------------------------file of end------------------------------*/
  
 

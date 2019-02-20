@@ -128,7 +128,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	UserIOInit();
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -149,7 +149,7 @@ int main(void)
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
-	SysInit();//系统初始化
+	
 	/* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
@@ -420,6 +420,7 @@ void StartDefaultTask(void const * argument)
 {
 
   /* USER CODE BEGIN 5 */
+	SysInit();//系统初始化
   /* Infinite loop */
   for(;;)
   {

@@ -87,7 +87,10 @@ uint8_t task_on_off = 0;
 			// /* ------ 云台任务 ------- */
 			// osThreadDef(gimbalTask, StartGimbalTask, osPriorityNormal, 0, 640);
       // startGimbalTaskHandle = osThreadCreate(osThread(gimbalTask), NULL);
+		#if BINGE_BOARD
 			ProgressBarLed(LED_GPIO, 300);
+		#elif RM_OLD_BOARD
+		#endif
       task_on_off = ENABLE;
 			/* -------- 删除系统任务 --------- */
 			vTaskDelete(startSysInitTaskHandle);

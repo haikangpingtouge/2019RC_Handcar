@@ -26,6 +26,7 @@
 #define __USER_H
 #include "sys_task.h"
 void SysInit(void);
+void UserIOInit(void);
 #endif // __USER_H
 
 /*--------------------------------file of end---------------------------------*/

@@ -33,7 +33,6 @@ int16_t wheel_speed[3];
 	*/
 	void AutoChassisControl(const dbusStruct* rc)
 	{
-		
 		ThreeWheelMotionModel(wheel_speed,400,0,0);
     MotorCanTx(wheel_speed[0],wheel_speed[1],wheel_speed[2]);
 	}
