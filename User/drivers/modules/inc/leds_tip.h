@@ -54,6 +54,17 @@
 	#define LED_GPIO GPIOE
   #define LED_TOTAL 7 //led等个数
   #define LED_ORIGIN_PIN 9  //灯GPIO起点引脚
+#elif RM_OLD_BOARD
+	#define LED_1 0
+	#define LED_2 0
+	#define LED_3 0
+	#define LED_4 0
+	#define LED_5 0
+	#define LED_6 0
+	#define LED_7 0
+	#define LED_GPIO0G  0
+  #define LED_TOTAL 0 //led等个数
+  #define LED_ORIGIN_PIN 0  //灯GPIO起点引脚
 #endif
 	void FlashingLed(GPIO_TypeDef *GPIO, uint16_t ledx, uint8_t times, uint32_t lag);
 	void ProgressBarLed(GPIO_TypeDef *GPIO, uint32_t lag);

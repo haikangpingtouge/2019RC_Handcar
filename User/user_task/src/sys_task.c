@@ -129,6 +129,7 @@ uint8_t task_on_off = 0;
 		{
       if(task_on_off == ENABLE)
       {
+  #if BINGE_BOARD
         if(parse_task_status == 1)
           FlashingLed(LED_GPIO, LED_1, 2, 100);
 				else if(rc_chassis_task_status == 1)
@@ -136,6 +137,10 @@ uint8_t task_on_off = 0;
 			  else if(auto_chassis_task_status == 1)
 				  FlashingLed(LED_GPIO, LED_3, 2, 50);
         else osDelay(1);
+  #elif RM_OLD_BOARD
+        (void)parse_task_status;
+  #endif 
+        osDelay(1);
       }
       else osDelay(1);
 		}
