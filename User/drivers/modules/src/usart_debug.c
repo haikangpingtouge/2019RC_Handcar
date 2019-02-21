@@ -1,8 +1,9 @@
 #include "niming.h"
 #ifdef DEBUG_BY_KEIL
-#define USED_FLOAT 0x01
+#define USED_FLOAT 0x01 
 #define USED_INT16 0x02
 #define USED_UINT32 0x04
+#
 void usart2_send_char(uint8_t c,UART_HandleTypeDef* huart);
 void usart2_niming_report(uint8_t fun,uint8_t*data,uint8_t len,\
 													UART_HandleTypeDef* huart);

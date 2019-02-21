@@ -1,8 +1,7 @@
 #ifndef __NIMING_H
 #define __NIMING_H
-#ifdef DEBUG_BY_KEIL
 #include "baseclass.h"
-
+#ifdef DEBUG_BY_KEIL
 typedef struct 
 {
 	void(*f)(float,float,UART_HandleTypeDef* huart);
