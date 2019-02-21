@@ -29,8 +29,8 @@
 #define HAL_F1 0
 #define HAL_F4 1
 /* -------------- 调试版本和发行版本选择 ----------------- */
-#define DEBUG_BY_KEIL 1
-#define RELEASE_BY_KEIL 0
+/*发行版请把这行宏定义注释掉*/
+#define DEBUG_BY_KEIL
 #if HAL_F1 
 	// #include "stm32f1xx_hal.h"
 	// #include <stdlib.h>

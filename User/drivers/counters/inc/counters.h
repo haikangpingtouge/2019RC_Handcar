@@ -76,6 +76,21 @@
 		float pid_out;//pidÊä³ö
 }speedPidStruct;
 int16_t SpeedPid(speedPidStruct *sps, int16_t error);
+/* =========================== ±´Èû¶ûÇúÏß of begin =========================== */
+	typedef struct BezierStruct
+	{
+		uint32_t *coordinate_x;
+		uint32_t *coordinate_y;
+		uint8_t n;
+		uint32_t point_x[8];
+		uint32_t point_y[8];
+		uint32_t precision;
+	}bezierStruct;
+	HAL_StatusTypeDef CreateDataSpace(bezierStruct* bs);
+	uint32_t QuadTo(const uint8_t n,const uint32_t *point,float t);
+/* =========================== ±´Èû¶ûÇúÏß of end =========================== */
+
+
 #endif	// __COUNTERS_H
 	
 /*--------------------------------file of end---------------------------------*/

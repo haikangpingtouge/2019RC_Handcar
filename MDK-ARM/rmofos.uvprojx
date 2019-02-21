@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F427xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/CMSIS/Include;..\User\user_task\inc;..\User\drivers\modules\inc;..\User\drivers\counters\inc;..\User\drivers\data_structure\inc;..\User\bsp\inc;..\User\app\inc</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../Drivers/CMSIS/Include;..\User\user_task\inc;..\User\drivers\modules\inc;..\User\drivers\counters\inc;..\User\drivers\data_structure\inc;..\User\bsp\inc;..\User\app\inc;..\User\drivers\data_structure\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -646,6 +646,21 @@
               <FileName>motion_model.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\User\drivers\counters\inc\motion_model.h</FilePath>
+            </File>
+            <File>
+              <FileName>DataStructure.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\drivers\data_structure\src\DataStructure.c</FilePath>
+            </File>
+            <File>
+              <FileName>DataStructure.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\drivers\data_structure\inc\DataStructure.h</FilePath>
+            </File>
+            <File>
+              <FileName>niming.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\drivers\modules\src\niming.c</FilePath>
             </File>
           </Files>
         </Group>
