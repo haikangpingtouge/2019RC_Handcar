@@ -29,6 +29,7 @@
 #include "DJI_dbus.h" 
 #include "wholepositioning.h"
 #include "motion_model.h"
+#include "usart_debug.h"
 typedef struct chassisStruct
 {
 	 maxionStruct *pmaxion1_t;

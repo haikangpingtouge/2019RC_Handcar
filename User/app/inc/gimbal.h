@@ -27,6 +27,7 @@
 #define __GIMBAL_H 
 #include "motor.h"
 #include "DJI_dbus.h" 
+#include "usart_debug.h"
 #endif // __GIMBAL_H
 /*-----------------------------------file of end------------------------------*/
 

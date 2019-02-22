@@ -107,7 +107,9 @@
 #define configUSE_MUTEXES                        1
 #define configQUEUE_REGISTRY_SIZE                8
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION  1
-
+/* -------- 查看所有任务状态宏 --------- */
+#define configUSE_TRACE_FACILITY 1 
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES                    0
 #define configMAX_CO_ROUTINE_PRIORITIES          ( 2 )
@@ -122,7 +124,7 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil             0
 #define INCLUDE_vTaskDelay                  1
 #define INCLUDE_xTaskGetSchedulerState      1
-
+// #define INCLUDE_uxTaskGetStackHighWaterMark 1 //查看任务的堆栈情况
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
  /* __BVIC_PRIO_BITS will be specified when CMSIS is being used. */

@@ -91,7 +91,7 @@
 		}
 		while(qu.rear !=qu.front){
 			qu.front=(qu.front+1)%MAXSIZE;
-			printf("当前队列值=%d\n",qu.data[qu.front]);
+//			printf("当前队列值=%d\n",qu.data[qu.front]);
 		}
 		return 1;
 	}

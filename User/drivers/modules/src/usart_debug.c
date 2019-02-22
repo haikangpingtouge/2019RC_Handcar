@@ -1,9 +1,36 @@
-#include "niming.h"
+/**
+  |-------------------------------- Copyright -----------------------------------|
+  |                                                                              |
+  |                        (C) Copyright 2019,海康平头哥,                         |
+  |            1 Xuefu Rd, Huadu Qu, Guangzhou Shi, Guangdong Sheng, China       |
+  |                            All Rights Reserved                               |
+  |                                                                              |
+  |            By(GCU The wold of team | 华南理工大学广州学院机器人野狼队)          |
+  |                     https://github.com/GCUWildwolfteam                       |
+  |------------------------------------------------------------------------------|
+  |--FileName    : usart_debug.c                                                
+  |--Version     : v1.0                                                            
+  |--Author      : 海康平头哥                                                       
+  |--Date        : 2019-02-21               
+  |--Libsupports : STM32CubeF1 Firmware Package V1.6.0(用别的库出问题别问我)
+  |--Description :                                                       
+  |--FunctionList                                                       
+  |-------1. ....                                                       
+  |          <version>:                                                       
+  |     <modify staff>:                                                       
+  |             <data>:                                                       
+  |      <description>:                                                        
+  |-------2. ...                                                       
+  |---------------------------------declaration of end----------------------------|
+ **/
+#include "usart_debug.h" 
 #ifdef DEBUG_BY_KEIL
 #define USED_FLOAT 0x01 
 #define USED_INT16 0x02
-#define USED_UINT32 0x04
-#
+#define USED_UINT32 0x04 
+#define IS_REUSED(_param) ( ((_param) == (USED_FLOAT)) || \
+                            ((_param) == (USED_INT16)) || \
+                            ((_param) == (USED_UINT32))  )
 void usart2_send_char(uint8_t c,UART_HandleTypeDef* huart);
 void usart2_niming_report(uint8_t fun,uint8_t*data,uint8_t len,\
 													UART_HandleTypeDef* huart);
@@ -11,10 +38,14 @@ void PID_Debugfloat(float Target,float Real,UART_HandleTypeDef* huart);
 void PID_Debugint16_t(int16_t Target,int16_t Real,UART_HandleTypeDef* huart);
 void DebugUint32_t(UART_HandleTypeDef* huart,uint32_t data);
 void NimingClassInit(void);
+/* ----------------- 外部链接 -------------------- */
+  extern UART_HandleTypeDef huart1;//串口1
+  extern UART_HandleTypeDef huart2;//串口1
+  extern UART_HandleTypeDef huart6;//串口1
 Niming_Class  nimingDebug_t;
 /* -------------------------------- begin 1 -------------------------------- */
 	/**
-	* @brief  串口二发送
+	* @brief  串口发送
 	* @param  
 	* @retval 
 	**/
@@ -25,7 +56,18 @@ void usart2_send_char(uint8_t c,UART_HandleTypeDef* huart)
     huart->Instance->DR=c;   
 }
 
-
+/*---------------------------------80字符限制-----------------------------------*/
+  /**
+  * @Data    2019-02-21 23:32
+  * @brief   重定向C库函数printf到USART2
+  * @param   void
+  * @retval  void
+  */
+	int fputc(int ch,FILE *f)  
+  {   
+    usart2_send_char((unsigned char)ch,&huart2);
+    return (ch);    
+  }
 /* -------------------------------- begin 2 -------------------------------- */
 	/**
 	* @brief  匿名结构体初始化
@@ -76,7 +118,11 @@ void PID_Debugfloat(float Target,float Real,UART_HandleTypeDef* huart)
 {
     uint8_t tbuf[8];
     unsigned char *p;
-    p=(unsigned char *)&Target;
+    /* -------- 使用标志位 --------- */   
+      SET_BIT(nimingDebug_t.flag,USED_FLOAT);
+    /* -------- 检测是否充分调用，防止打印数据混乱 --------- */
+     assert_param(IS_REUSED(nimingDebug_t.flag));
+     p=(unsigned char *)&Target;
      tbuf[0]=(unsigned char)(*(p+3));
      tbuf[1]=(unsigned char)(*(p+2));
 	 tbuf[2]=(unsigned char)(*(p+1));
@@ -88,7 +134,6 @@ void PID_Debugfloat(float Target,float Real,UART_HandleTypeDef* huart)
 	 tbuf[6]=(unsigned char)(*(p+1));
 	 tbuf[7]=(unsigned char)(*(p+0));
 	  p=NULL;
-  	nimingDebug_t.flag = USED_FLOAT;
     usart2_niming_report(0XA1,tbuf,8,huart);//自定义帧,0XA2
 }
 /* -------------------------------- begin 5 -------------------------------- */
@@ -101,36 +146,48 @@ void PID_Debugfloat(float Target,float Real,UART_HandleTypeDef* huart)
 /* -------------------------------- end -------------------------------- */
 void PID_Debugint16_t(int16_t Target,int16_t Real,UART_HandleTypeDef* huart)
 {
-    uint8_t tbuf[4];
-    unsigned char *p;
-    p=(unsigned char *)&Target;
-     tbuf[0]=(unsigned char)(*(p+1));
-	 tbuf[1]=(unsigned char)(*(p+0));
-	 
-    p=(unsigned char *)&Real;
-	tbuf[2]=(unsigned char)(*(p+1));
-	tbuf[3]=(unsigned char)(*(p+0));
-	  p=NULL;
-		nimingDebug_t.flag = USED_INT16;
-    usart2_niming_report(0XA1,tbuf,4,huart);//自定义帧,0XA2
+  uint8_t tbuf[4];
+  unsigned char *p;
+  /* -------- 使用标志位 --------- */   
+  SET_BIT(nimingDebug_t.flag,USED_INT16);
+  /* -------- 检测是否充分调用，防止打印数据混乱 --------- */
+  assert_param(IS_REUSED(nimingDebug_t.flag));
+  p=(unsigned char *)&Target;
+  tbuf[0]=(unsigned char)(*(p+1));
+  tbuf[1]=(unsigned char)(*(p+0));
+
+  p=(unsigned char *)&Real;
+  tbuf[2]=(unsigned char)(*(p+1));
+  tbuf[3]=(unsigned char)(*(p+0));
+  p=NULL;
+  nimingDebug_t.flag = USED_INT16;
+  usart2_niming_report(0XA1,tbuf,4,huart);//自定义帧,0XA2
 }
 /**
-	* @Data    2019-02-21 18:15
-	* @brief   发送uint32_t类型数据给匿名上位机
-	* @param   void
-	* @retval  void
-	*/
-	void DebugUint32_t(UART_HandleTypeDef* huart,uint32_t data)
-	{
-		 uint8_t tbuf[4];
+* @Data    2019-02-21 18:15
+* @brief   发送uint32_t类型数据给匿名上位机
+* @param   void
+* @retval  void
+*/
+void DebugUint32_t(UART_HandleTypeDef* huart,uint32_t data)
+{
+    uint8_t tbuf[4];
     unsigned char *p;
+    /* -------- 使用标志位 --------- */   
+    SET_BIT(nimingDebug_t.flag,USED_UINT32);
+    /* -------- 检测是否充分调用，防止打印数据混乱 --------- */
+    assert_param(IS_REUSED(nimingDebug_t.flag));
     p=(unsigned char *)&data;
     tbuf[0]=(unsigned char)(*(p+3));
     tbuf[1]=(unsigned char)(*(p+2));
-	  tbuf[2]=(unsigned char)(*(p+1));
-	  tbuf[3]=(unsigned char)(*(p+0));
-		p=NULL;
-		nimingDebug_t.flag = USED_UINT32;
+    tbuf[2]=(unsigned char)(*(p+1));
+    tbuf[3]=(unsigned char)(*(p+0));
+    p=NULL;
+    nimingDebug_t.flag = USED_UINT32;
     usart2_niming_report(0XA1,tbuf,4,huart);//自定义帧,0XA2
-	}
+}
 #endif
+/*------------------------------------file of end-------------------------------*/
+
+
+

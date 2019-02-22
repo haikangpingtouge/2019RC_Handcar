@@ -43,6 +43,7 @@ extern CAN_HandleTypeDef hcan1;
 	void StartChassisTask(void const *argument);
 	void StartRcChassisTask(void const *argument);//遥控模式
 	void StartAutoChassisTask(void const *argument);//自动模式
+  	void StartGimbalTask(void const *argument);
 	// void StartGimbalTask(void const *argument);
 /* -------------- 私有宏 ----------------- */
 	#define RC_MODE 2 //遥控模式
@@ -61,7 +62,7 @@ uint8_t task_on_off = 0;
 	void SysInitCreate(void)
 	{
 		/* -------- 系统初始化任务创建 --------- */
-		osThreadDef(sysInitTask, StartSysInitTask, osPriorityNormal, 0, 512);
+		osThreadDef(sysInitTask, StartSysInitTask, osPriorityNormal, 0, 256);
 		startSysInitTaskHandle = osThreadCreate(osThread(sysInitTask), NULL);
 	}
 /**
@@ -72,27 +73,30 @@ uint8_t task_on_off = 0;
 	*/
 	void StartSysInitTask(void const * argument)
 	{
+//    printf("系统任务创建成功，请等待子任务创建。。。。。\r\n");
     for(;;)
     {
       task_on_off = DISABLE;
 			/* -------- 数据分析任务 --------- */
-      osThreadDef(parseTask, StartParseTask, osPriorityRealtime, 0, 512);
+      osThreadDef(parseTask, StartParseTask, osPriorityRealtime, 0, 128);
       startParseTaskHandle = osThreadCreate(osThread(parseTask), NULL);	
 			/* -------- led灯提示任务 --------- */
-			osThreadDef(ledTask, StartLedTask, osPriorityAboveNormal, 0,128);
+			osThreadDef(ledTask, StartLedTask, osPriorityAboveNormal, 0,512);
       startLedTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 			/* ------ 底盘模式任务 ------- */
-			osThreadDef(chassisTask, StartChassisTask, osPriorityHigh, 0, 1024);
+			osThreadDef(chassisTask, StartChassisTask, osPriorityHigh, 0, 256);
       startChassisTaskHandle = osThreadCreate(osThread(chassisTask),&dbus_t);
-			// /* ------ 云台任务 ------- */
-			// osThreadDef(gimbalTask, StartGimbalTask, osPriorityNormal, 0, 640);
-      // startGimbalTaskHandle = osThreadCreate(osThread(gimbalTask), NULL);
+//			/* ------ 云台任务 ------- */
+//			osThreadDef(gimbalTask, StartGimbalTask, osPriorityNormal, 0, 128);
+//      startGimbalTaskHandle = osThreadCreate(osThread(gimbalTask), NULL);
 		#if BINGE_BOARD
 			ProgressBarLed(LED_GPIO, 300);
 		#elif RM_OLD_BOARD
+    osDelay(20);
 		#endif
       task_on_off = ENABLE;
 			/* -------- 删除系统任务 --------- */
+//     printf("所有子任务任务创建完毕\r\n");
 			vTaskDelete(startSysInitTaskHandle);
     }
 	}
@@ -105,6 +109,7 @@ uint8_t task_on_off = 0;
 	void StartParseTask(void const *argument)
 	{
     DJIDbusInit(&dbus_t,&huart1);//大疆遥控初始化
+//    printf("解析任务初始化完毕\r\n");
 		for(;;)
 		{
       if(task_on_off == ENABLE)
@@ -125,6 +130,8 @@ uint8_t task_on_off = 0;
 	*/
 	void StartLedTask(void const *argument)
 	{
+//    printf("led灯提示任务初始化完毕\r\n");
+     uint8_t pcWriteBuffer[500];
 		for(;;)
 		{
       if(task_on_off == ENABLE)
@@ -140,7 +147,10 @@ uint8_t task_on_off = 0;
   #elif RM_OLD_BOARD
         (void)parse_task_status;
   #endif 
-        osDelay(1);
+        vTaskList((char *)&pcWriteBuffer);
+        printf("任务名      任务状态 优先级   剩余栈 任务序号\r\n");
+        printf("%s\r\n", pcWriteBuffer); 
+        osDelay(500);
       }
       else osDelay(1);
 		}
@@ -161,9 +171,10 @@ void StartChassisTask(void const *argument)
 /* ------ 底盘数据初始化 ------- */
 	ChassisInit();
 /* ------ 默认底盘任务为自动模式 ------- */
-	osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,512);
+	osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,128);
 	startAutoChassisTaskHandle=osThreadCreate(osThread(autoChassisTask),NULL);
 	flag = AUTO_MODE;
+//  printf("底盘任务初始化完毕\r\n");
 	for(;;)
 	{
 		switch (pAutoRc_t->switch_left) 
@@ -175,7 +186,7 @@ void StartChassisTask(void const *argument)
 			/* -------- 删除手动底盘任务 --------- */ 
 			vTaskDelete(startRcChassisTaskHandle);
 			rc_chassis_task_status = 0;
-			osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,512);
+			osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,128);
 			startAutoChassisTaskHandle=osThreadCreate(osThread(autoChassisTask),NULL);
 			flag = AUTO_MODE;
 		}
@@ -187,7 +198,7 @@ void StartChassisTask(void const *argument)
 			/* -------- 删除自动底盘任务 --------- */
 			vTaskDelete(startAutoChassisTaskHandle);
 			auto_chassis_task_status = 0;
-			osThreadDef(rcChassisTask, StartRcChassisTask, osPriorityNormal, 0, 512);
+			osThreadDef(rcChassisTask, StartRcChassisTask, osPriorityNormal, 0, 128);
 			startRcChassisTaskHandle = osThreadCreate(osThread(rcChassisTask), NULL);
       flag = RC_MODE;
 		}
@@ -225,6 +236,7 @@ void StartChassisTask(void const *argument)
 	*/
 	void StartAutoChassisTask(void const *argument)
 	{
+//    printf("自动底盘任务初始化完毕\r\n");
 		for (;;)
 		{  
 			if(task_on_off == ENABLE)
@@ -237,22 +249,33 @@ void StartChassisTask(void const *argument)
 		}
 
 	}
-// /**
-// 	* @Data    2019-01-27 17:55
-// 	* @brief   云台任务钩子函数
-// 	* @param   argument: Not used
-// 	* @retval  void
-// 	*/
-// 	void StartGimbalTask(void const *argument)
-// 	{
-// 		for (;;)
-// 		{  
-// 			if(task_on_off == ENABLE)
+///**
+//	* @Data    2019-01-27 17:55
+//	* @brief   云台任务钩子函数
+//	* @param   argument: Not used
+//	* @retval  void
+//	*/
+//	void StartGimbalTask(void const *argument)
+//	{
+
+////    int i =0;
+//		for (;;)
+//		{  
+////      (void)a;
+//			if(task_on_off == ENABLE)
 //       {
-// 				osDelay(2);
-// 			}
-// 			else osDelay(1);
-// 		}
-// 	}
+////        for(i=0;i<100;i++)
+////         {
+////           a[i] = 99;
+////         }
+//			 	 osDelay(500);
+
+//			 }
+//			 else 
+//       {
+//         osDelay(1);
+//       }
+//		}
+//	}
 /*----------------------------------file of end-------------------------------*/
   

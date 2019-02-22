@@ -184,7 +184,6 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
-            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -658,9 +657,9 @@
               <FilePath>..\User\drivers\data_structure\inc\DataStructure.h</FilePath>
             </File>
             <File>
-              <FileName>niming.c</FileName>
+              <FileName>usart_debug.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\User\drivers\modules\src\niming.c</FilePath>
+              <FilePath>..\User\drivers\modules\src\usart_debug.c</FilePath>
             </File>
           </Files>
         </Group>
