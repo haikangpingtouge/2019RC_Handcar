@@ -29,6 +29,7 @@
 #include "rc_chassis.h" 
 #include "leds_tip.h" 
 #include "parse.h" 
+#include "debug_by_keil.h" 
 void SysInitCreate(void);
 #endif	// __USER_TASK_H
 /*----------------------------------file of end-------------------------------*/

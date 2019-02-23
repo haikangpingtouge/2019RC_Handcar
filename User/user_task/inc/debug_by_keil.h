@@ -8,38 +8,36 @@
 	|           By(GCU The wold of team | 华南理工大学广州学院机器人野狼队)         |
 	|                    https://github.com/GCUWildwolfteam                      |
 	|----------------------------------------------------------------------------|
-	|--FileName    : parse.c                                              
-	|--Version     : v1.0                                                          
-	|--Author      : 海康平头哥                                                     
-	|--Date        : 2019-02-02             
+	|--FileName    : debug_by_keil.h                                                
+	|--Version     : v1.0                                                            
+	|--Author      : 海康平头哥                                                       
+	|--Date        : 2019-02-23               
 	|--Libsupports : 
-	|--Description :                                                     
-	|--FunctionList                                                     
-	|-------1. ....                                                     
-	|          <version>:                                                     
+	|--Description :                                                       
+	|--FunctionList                                                       
+	|-------1. ....                                                       
+	|          <version>:                                                       
 	|     <modify staff>:                                                       
 	|             <data>:                                                       
 	|      <description>:                                                        
 	|-------2. ...                                                       
 	|-----------------------------declaration of end-----------------------------|
  **/
+#ifndef __DEBUG_BY_KEIL_H 
+#define __DEBUG_BY_KEIL_H 
+#include "auto_chassis.h" 
+#include "rc_chassis.h" 
+#include "leds_tip.h" 
 #include "parse.h" 
-/* -------------- 外部链接 ----------------- */
- extern uint8_t can1_rx[12];
-	/**
-	* @Data    2019-02-14 14:36
-	* @brief   数据解析
-	* @param   void
-	* @retval  void
-	*/
-	void ParseData(void)
-	{
-		uint32_t can_id = 0;
-		ByleToMultibyte(&can1_rx[8],&can_id);
-		ChassisParseDate(can_id,can1_rx);
-//			UserCanQueueRX(&hcan1,can1_rx);//cam1接收
-		// ByleToMultibyte(&can1_rx[8],&can_id)
-	}
+#ifdef DEBUG_BY_KEIL
+typedef struct debugByKeilStruct
+{
+	bezierStruct* pbezier_t;
+}debugByKeilStruct;
+extern debugByKeilStruct debugByKeil_t;
+void DebugByKeilInit(void);
+#endif
+#endif	// __DEBUG_BY_KEIL_H
 /*-----------------------------------file of end------------------------------*/
 
 

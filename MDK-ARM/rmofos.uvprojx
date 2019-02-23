@@ -184,6 +184,7 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -726,6 +727,16 @@
               <FileType>5</FileType>
               <FilePath>..\User\app\inc\auto_chassis.h</FilePath>
             </File>
+            <File>
+              <FileName>rc_gimbal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\app\src\rc_gimbal.c</FilePath>
+            </File>
+            <File>
+              <FileName>rc_gimbal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\app\inc\rc_gimbal.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -750,6 +761,16 @@
               <FileName>user.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\User\user_task\inc\user.h</FilePath>
+            </File>
+            <File>
+              <FileName>debug_by_keil.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\User\user_task\src\debug_by_keil.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_by_keil.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\User\user_task\inc\debug_by_keil.h</FilePath>
             </File>
           </Files>
         </Group>

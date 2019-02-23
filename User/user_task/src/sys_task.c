@@ -24,10 +24,13 @@
 	|------------------------------declaration of end----------------------------|
  **/
 #include "sys_task.h"
+#include <Math.h>
 dbusStruct dbus_t; //大疆遥控
 /* -------------- 外部链接 ----------------- */
 extern UART_HandleTypeDef huart1;//串口1
-extern CAN_HandleTypeDef hcan1;
+extern UART_HandleTypeDef huart2;//串口2
+extern UART_HandleTypeDef huart3;//串口3
+extern CAN_HandleTypeDef hcan2;
 /* ----------------- 任务句柄 -------------------- */
 	osThreadId startSysInitTaskHandle; 
 	osThreadId startParseTaskHandle;
@@ -35,7 +38,9 @@ extern CAN_HandleTypeDef hcan1;
 	osThreadId startChassisTaskHandle;
 	osThreadId startGimbalTaskHandle;
 	osThreadId startRcChassisTaskHandle; //遥控模式
-	osThreadId startAutoChassisTaskHandle; //遥控模式
+	osThreadId startAutoChassisTaskHandle; //自动模式
+	osThreadId startBezierTaskHandle; //贝塞尔曲线生成任务
+
 /* ----------------- 任务钩子函数 -------------------- */
 	void StartSysInitTask(void const *argument);
 	void StartParseTask(void const *argument);
@@ -43,7 +48,8 @@ extern CAN_HandleTypeDef hcan1;
 	void StartChassisTask(void const *argument);
 	void StartRcChassisTask(void const *argument);//遥控模式
 	void StartAutoChassisTask(void const *argument);//自动模式
-  	void StartGimbalTask(void const *argument);
+	void StartBezierTask(void const *argument);//贝塞尔曲线生成任务
+  // void StartGimbalTask(void const *argument);
 	// void StartGimbalTask(void const *argument);
 /* -------------- 私有宏 ----------------- */
 	#define RC_MODE 2 //遥控模式
@@ -81,7 +87,7 @@ uint8_t task_on_off = 0;
       osThreadDef(parseTask, StartParseTask, osPriorityRealtime, 0, 128);
       startParseTaskHandle = osThreadCreate(osThread(parseTask), NULL);	
 			/* -------- led灯提示任务 --------- */
-			osThreadDef(ledTask, StartLedTask, osPriorityAboveNormal, 0,512);
+			osThreadDef(ledTask, StartLedTask, osPriorityAboveNormal, 0,1500);
       startLedTaskHandle = osThreadCreate(osThread(ledTask), NULL);
 			/* ------ 底盘模式任务 ------- */
 			osThreadDef(chassisTask, StartChassisTask, osPriorityHigh, 0, 256);
@@ -130,12 +136,15 @@ uint8_t task_on_off = 0;
 	*/
 	void StartLedTask(void const *argument)
 	{
-//    printf("led灯提示任务初始化完毕\r\n");
-     uint8_t pcWriteBuffer[500];
+    uint16_t i=0;
+//uint32_t s[1000] = {0};
+
+    //    printf("led灯提示任务初始化完毕\r\n");
+//     uint8_t pcWriteBuffer[500];
 		for(;;)
 		{
-      if(task_on_off == ENABLE)
-      {
+//      if(task_on_off == ENABLE)
+//      {
   #if BINGE_BOARD
         if(parse_task_status == 1)
           FlashingLed(LED_GPIO, LED_1, 2, 100);
@@ -147,12 +156,20 @@ uint8_t task_on_off = 0;
   #elif RM_OLD_BOARD
         (void)parse_task_status;
   #endif 
-        vTaskList((char *)&pcWriteBuffer);
-        printf("任务名      任务状态 优先级   剩余栈 任务序号\r\n");
-        printf("%s\r\n", pcWriteBuffer); 
-        osDelay(500);
-      }
-      else osDelay(1);
+//        vTaskList((char *)&pcWriteBuffer);
+//        printf("任务名      任务状态 优先级   剩余栈 任务序号\r\n");
+//        printf("%s\r\n", pcWriteBuffer); 
+//        osDelay(500);
+        if(i<4500)
+        {
+					
+					;
+           Debug_t.uint32(&huart2,((uint32_t)((1500*sin(0.00419*i))+1500)));
+          i++;
+        }
+        osDelay(10);
+//      }
+//      else osDelay(1);
 		}
     
 	}
@@ -174,6 +191,9 @@ void StartChassisTask(void const *argument)
 	osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,128);
 	startAutoChassisTaskHandle=osThreadCreate(osThread(autoChassisTask),NULL);
 	flag = AUTO_MODE;
+/* ------ 贝塞尔曲线生成任务 ------- */
+	osThreadDef(bezierTask,StartBezierTask,osPriorityNormal,0,1024);
+	startBezierTaskHandle = osThreadCreate(osThread(bezierTask),NULL);
 //  printf("底盘任务初始化完毕\r\n");
 	for(;;)
 	{
@@ -277,5 +297,49 @@ void StartChassisTask(void const *argument)
 //       }
 //		}
 //	}
+ /**
+	* @Data    2019-02-22 14:44
+	* @brief   贝塞尔曲线生成任务钩子函数
+	* @param   argument: Not used
+	* @retval  void
+	*/
+	void StartBezierTask(void const *argument)
+	{
+// 		bezierStruct bezier_t; //贝塞尔曲线结构体
+// 		bezier_t.coordinate_x = NULL;
+// 		bezier_t.coordinate_y = NULL;
+// 		bezier_t.n = 4;
+// 		bezier_t.precision = 1000;
+// 		bezier_t.point_x[0] = 0;
+// 		bezier_t.point_y[0] = 0;
+// 		bezier_t.point_x[1] = 1500; //mm
+// 		bezier_t.point_y[1] = 1500;
+// 		bezier_t.point_x[2] = 0;
+// 		bezier_t.point_y[2] = 3000;
+// 		bezier_t.point_x[3] = 1500;
+// 		bezier_t.point_y[3] = 4500;
+// 		bezier_t.point_x[4] = 750;
+// 		bezier_t.point_y[4] = 5250;
+// 		bezier_t.point_x[5] = 0;
+// 		bezier_t.point_y[5] = 0;
+// 		bezier_t.point_x[6] = 0;
+// 		bezier_t.point_y[6] = 0;
+// 		bezier_t.point_x[7] = 0;
+// 		bezier_t.point_y[7] = 0;
+// 		/* ------ 四阶贝塞尔曲线生成 ------- */
+// 			CreateDataSpace(&bezier_t);
+// #ifdef DEBUG_BY_KEIL
+// 		debugByKeil_t.pbezier_t = &bezier_t;
+// #endif
+	  for (;;)
+		{  
+			if(task_on_off == ENABLE)
+      {
+
+				osDelay(1);
+			}
+			else osDelay(1);
+		}
+	}
 /*----------------------------------file of end-------------------------------*/
   

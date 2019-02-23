@@ -42,7 +42,7 @@ void NimingClassInit(void);
   extern UART_HandleTypeDef huart1;//串口1
   extern UART_HandleTypeDef huart2;//串口1
   extern UART_HandleTypeDef huart6;//串口1
-Niming_Class  nimingDebug_t;
+Niming_Class  Debug_t;
 /* -------------------------------- begin 1 -------------------------------- */
 	/**
 	* @brief  串口发送
@@ -59,7 +59,7 @@ void usart2_send_char(uint8_t c,UART_HandleTypeDef* huart)
 /*---------------------------------80字符限制-----------------------------------*/
   /**
   * @Data    2019-02-21 23:32
-  * @brief   重定向C库函数printf到USART2
+  * @brief   重定向C库函数 printf 到USART2
   * @param   void
   * @retval  void
   */
@@ -75,12 +75,12 @@ void usart2_send_char(uint8_t c,UART_HandleTypeDef* huart)
 	* @retval 
 	**/
 /* -------------------------------- end -------------------------------- */
-void NimingClassInit(void)
+void DebugClassInit(void)
 {
-	nimingDebug_t.f=PID_Debugfloat;
-	nimingDebug_t.i16=PID_Debugint16_t;
-	nimingDebug_t.uint32 = DebugUint32_t;
-	nimingDebug_t.flag = 0;
+	Debug_t.f=PID_Debugfloat;
+	Debug_t.i16=PID_Debugint16_t;
+	Debug_t.uint32 = DebugUint32_t;
+	Debug_t.flag = 0;
 }
 
 /* -------------------------------- begin 3 -------------------------------- */
@@ -119,9 +119,9 @@ void PID_Debugfloat(float Target,float Real,UART_HandleTypeDef* huart)
     uint8_t tbuf[8];
     unsigned char *p;
     /* -------- 使用标志位 --------- */   
-      SET_BIT(nimingDebug_t.flag,USED_FLOAT);
+      SET_BIT(Debug_t.flag,USED_FLOAT);
     /* -------- 检测是否充分调用，防止打印数据混乱 --------- */
-     assert_param(IS_REUSED(nimingDebug_t.flag));
+     assert_param(IS_REUSED(Debug_t.flag));
      p=(unsigned char *)&Target;
      tbuf[0]=(unsigned char)(*(p+3));
      tbuf[1]=(unsigned char)(*(p+2));
@@ -149,9 +149,9 @@ void PID_Debugint16_t(int16_t Target,int16_t Real,UART_HandleTypeDef* huart)
   uint8_t tbuf[4];
   unsigned char *p;
   /* -------- 使用标志位 --------- */   
-  SET_BIT(nimingDebug_t.flag,USED_INT16);
+  SET_BIT(Debug_t.flag,USED_INT16);
   /* -------- 检测是否充分调用，防止打印数据混乱 --------- */
-  assert_param(IS_REUSED(nimingDebug_t.flag));
+  assert_param(IS_REUSED(Debug_t.flag));
   p=(unsigned char *)&Target;
   tbuf[0]=(unsigned char)(*(p+1));
   tbuf[1]=(unsigned char)(*(p+0));
@@ -160,7 +160,7 @@ void PID_Debugint16_t(int16_t Target,int16_t Real,UART_HandleTypeDef* huart)
   tbuf[2]=(unsigned char)(*(p+1));
   tbuf[3]=(unsigned char)(*(p+0));
   p=NULL;
-  nimingDebug_t.flag = USED_INT16;
+  Debug_t.flag = USED_INT16;
   usart2_niming_report(0XA1,tbuf,4,huart);//自定义帧,0XA2
 }
 /**
@@ -174,16 +174,16 @@ void DebugUint32_t(UART_HandleTypeDef* huart,uint32_t data)
     uint8_t tbuf[4];
     unsigned char *p;
     /* -------- 使用标志位 --------- */   
-    SET_BIT(nimingDebug_t.flag,USED_UINT32);
+    SET_BIT(Debug_t.flag,USED_UINT32);
     /* -------- 检测是否充分调用，防止打印数据混乱 --------- */
-    assert_param(IS_REUSED(nimingDebug_t.flag));
+    assert_param(IS_REUSED(Debug_t.flag));
     p=(unsigned char *)&data;
     tbuf[0]=(unsigned char)(*(p+3));
     tbuf[1]=(unsigned char)(*(p+2));
     tbuf[2]=(unsigned char)(*(p+1));
     tbuf[3]=(unsigned char)(*(p+0));
     p=NULL;
-    nimingDebug_t.flag = USED_UINT32;
+    Debug_t.flag = USED_UINT32;
     usart2_niming_report(0XA1,tbuf,4,huart);//自定义帧,0XA2
 }
 #endif

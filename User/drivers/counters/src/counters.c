@@ -25,6 +25,19 @@
 #include "counters.h" 
 #include <Math.h>
 /* ===================== Bezier(贝塞尔曲线) of begin ===================== */
+//  /**
+// 	* @Data    2019-02-23 11:45
+// 	* @brief   贝塞尔曲线结构体初始化
+// 	* @param   void
+// 	* @retval  void
+// 	*/
+// 	void BezierStructInit(bezierStruct* bs)
+// 	{
+// 		bs->coordinate_x = NULL;
+// 		bs->coordinate_y = NULL;
+// 		bs->n = 4;
+// 		bs->precision = 1000;
+// 	}
 	/**
 		* @Data    2019-02-21 16:38
 		* @brief   创建坐标点储存空间
@@ -48,7 +61,7 @@
 			{
 				t = i/bs->precision;
 				*(bs->coordinate_x+i) = QuadTo(bs->n,bs->point_x,t);
-			  *(bs->coordinate_y+i) = QuadTo(bs->n,bs->point_x,t);
+			  *(bs->coordinate_y+i) = QuadTo(bs->n,bs->point_y,t);
 			}
 			return HAL_OK;
 		}

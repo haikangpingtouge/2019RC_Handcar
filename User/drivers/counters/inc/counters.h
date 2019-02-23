@@ -85,6 +85,9 @@ int16_t SpeedPid(speedPidStruct *sps, int16_t error);
 		uint32_t point_x[8];
 		uint32_t point_y[8];
 		uint32_t precision;
+		// void(*SetPoint)(uint32_t x,uint32_t y);//设置控制点
+		// void(*SetPrecision)(uint32_t precision);//设置曲线精度
+		// void(*SetPow)(uint8_t n);//设置贝塞尔阶数
 	}bezierStruct;
 	HAL_StatusTypeDef CreateDataSpace(bezierStruct* bs);
 	uint32_t QuadTo(const uint8_t n,const uint32_t *point,float t);
