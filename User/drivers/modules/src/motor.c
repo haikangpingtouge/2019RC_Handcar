@@ -162,8 +162,8 @@
 		void ResetMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id)
 		{
       uint8_t s[8];
+      memset(s,0x55,8);
 			rx_id |= reset_fun_e;
-      DataFilling(s,0x55,8);
 			CanTxMsg(hcanx,rx_id,s);
 		}
 	/**
@@ -175,8 +175,8 @@
 		void ModeSelectionMode(CAN_HandleTypeDef *hcanx,uint32_t rx_id,uint8_t mode)
 		{
 			uint8_t s[8];
+       memset(s,0x55,8);
 			rx_id |= mode_selection_fun_e;
-      DataFilling(s,0x55,8);
 			s[0] = mode;
 			CanTxMsg(hcanx,rx_id,s);
 		}
@@ -189,9 +189,9 @@
 	*/
 	void SpeedLoopMode(int16_t pwm,int16_t Speed,uint8_t *data)
 	{
+     memset(data,0x55,8);
 		TwobyteToByle(pwm,(data));
 		TwobyteToByle(Speed,(data+2));
-		DataFilling((data+4),0x55,8);
 	}
 	 /**
 		* @Data    2019-02-16 13:31
@@ -201,6 +201,7 @@
 		*/
 		void OpenLoopMode(int16_t pwm,uint8_t *data)
 		{
+       memset(data,0x55,8);
 			TwobyteToByle(pwm,(data));
 			DataFilling((data+2),0x55,8);
 		}
@@ -220,7 +221,7 @@
     {
         Ctl1_Ctl2 = 0x00;
     }
-      DataFilling(s,0x55,8);
+    memset(s,0x55,8);
 		s[0] = Time;
 		s[1] = Ctl1_Ctl2;
 		CanTxMsg(hcanx,id,s);

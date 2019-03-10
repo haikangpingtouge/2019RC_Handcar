@@ -32,11 +32,13 @@
 #ifdef DEBUG_BY_KEIL
 typedef struct debugByKeilStruct
 {
-	bezierStruct* pbezier_t;
+	const bezierStruct* d_pbezier_t;
+ const chassisStruct* d_chassis_t;//╣вел
+ const dbusStruct* d_rc;
 }debugByKeilStruct;
-extern debugByKeilStruct debugByKeil_t;
 void DebugByKeilInit(void);
-#endif
+extern debugByKeilStruct pdebug_t;
+#endif 
 #endif	// __DEBUG_BY_KEIL_H
 /*-----------------------------------file of end------------------------------*/
 

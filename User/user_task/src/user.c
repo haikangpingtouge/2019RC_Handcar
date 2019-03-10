@@ -32,13 +32,10 @@
 	*/
 		void SysInit(void)
 		{ 
+			SysInitCreate();
 #ifdef DEBUG_BY_KEIL //keilµ÷ÊÔ³õÊ¼»¯
-			DebugClassInit();
 			DebugByKeilInit();
 #endif
-      UserIOInit();
-			SysInitCreate();
-	
 		}
  /**
 	* @Data    2019-02-20 21:11

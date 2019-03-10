@@ -27,7 +27,9 @@
 #define __PARSE_H 
  #include "chassis.h"
  #include "gimbal.h"  
+ void ParseInit(void);
  void ParseData(void);
+ 	const dbusStruct* GetRcStructAdd(void);
 #endif	// __PARSE_H
 /*-----------------------------------file of end------------------------------*/
 

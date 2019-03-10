@@ -25,11 +25,11 @@
  **/
 #include "chassis.h"
 /* -------------- 结构体声明 ----------------- */
-  chassisStruct chassis_t;//底盘
-  maxionStruct maxion1_t;
-	maxionStruct maxion2_t;
-	maxionStruct maxion3_t;
-	wholePositionStruct wholePosition_t;
+ static chassisStruct chassis_t;//底盘
+ static maxionStruct maxion1_t;
+	static maxionStruct maxion2_t;
+	static maxionStruct maxion3_t;
+	static wholePositionStruct wholePosition_t;
 /* -------------- 外部链接 ----------------- */
 	extern CAN_HandleTypeDef hcan1;
 	extern UART_HandleTypeDef huart6;//串口1
@@ -177,4 +177,14 @@
 			// MotorInit(chassis_t.pmoter_can,maxion2_t.module_id,mode);//电机2初始化
 			// MotorInit(chassis_t.pmoter_can,maxion3_t.module_id,mode);//电机3初始化
 	 }
+ /*
+	* @Data    2019-02-24 11:59
+	* @brief   获取底盘结构体地址
+	* @param   void
+	* @retval  void
+	*/
+	const chassisStruct* GetChassisStructAdd(void)
+	{
+		return &chassis_t;
+	}
 /*----------------------------------file of end-------------------------------*/

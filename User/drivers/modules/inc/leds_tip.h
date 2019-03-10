@@ -30,8 +30,8 @@
 #include "baseclass.h"
 /* ----------------- 开发板的选择 -------------------- */
 #define RM_NEW_BOARD 0
-#define RM_OLD_BOARD 1
-#define BINGE_BOARD 0 //斌哥的板子
+#define RM_OLD_BOARD 0
+#define BINGE_BOARD 1 //斌哥的板子
 /* ----------------- led引脚宏定义定义 -------------------- */
 #if RM_NEW_BOARD //新板引脚宏定义
 	#define LED_1 GPIO_PIN_1
