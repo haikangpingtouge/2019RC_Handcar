@@ -25,8 +25,9 @@
  **/
 #include "debug_by_keil.h" 
 #ifdef DEBUG_BY_KEIL
-//#define PRINTFTASKSTATUS 
+#define PRINTFTASKSTATUS 
  extern UART_HandleTypeDef huart2;//串口1
+ extern UART_HandleTypeDef huart7;
 debugByKeilStruct pdebug_t;
 osThreadId startDebugByKeilTaskHandle; 
 void StartDebugByKeilTask(void const *argument);
@@ -57,6 +58,7 @@ void StartDebugByKeilTask(void const *argument)
 #ifdef PRINTFTASKSTATUS
      uint8_t pcWriteBuffer[500];
 #endif
+  uint8_t aa=1;
 		for(;;)
 		{
 #ifdef PRINTFTASKSTATUS
@@ -70,9 +72,12 @@ void StartDebugByKeilTask(void const *argument)
 //        printf("任务名称\t运行计数\t使用率\r\n");
 //        printf("-------------------------------------------------\r\n");
 //        vTaskGetRunTimeStats((char *)&pcWriteBuffer);
-//        printf("%s\r\n", pcWriteBuffer); 
+//        printf("%s\r\n", pcWriteBuffer);
+         osDelay(500);      
 #endif
-      osDelay(500);
+//      HAL_UART_Transmit(&huart7,&aa,1,0);
+//      osDelay(5);
+      
 		}
 }
 //	/**

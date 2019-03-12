@@ -105,21 +105,21 @@ uint8_t databuff[21];//数据接收
 		}
 		else
 		{
-		dbs->ch1 = 0;
-		dbs->ch2 = 0;
-		dbs->ch3 = 0;
-		dbs->ch4 = 0;
- 
-		dbs->switch_left = 0;
-		dbs->switch_right = 0;
-		
-		dbs->mouse.x = 0;
-		dbs->mouse.y = 0;
-		dbs->mouse.z = 0;
-		
-		dbs->mouse.press_left	= 0;
-		dbs->mouse.press_right	= 0;
-		dbs->keyBoard.key_code	= 0;
+//		dbs->ch1 = 0;
+//		dbs->ch2 = 0;
+//		dbs->ch3 = 0;
+//		dbs->ch4 = 0;
+// 
+//		dbs->switch_left = 0;
+//		dbs->switch_right = 0;
+//		
+//		dbs->mouse.x = 0;
+//		dbs->mouse.y = 0;
+//		dbs->mouse.z = 0;
+//		
+//		dbs->mouse.press_left	= 0;
+//		dbs->mouse.press_right	= 0;
+//		dbs->keyBoard.key_code	= 0;
 		}
 	}
 	/**

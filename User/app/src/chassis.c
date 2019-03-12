@@ -34,10 +34,6 @@
 	extern CAN_HandleTypeDef hcan1;
 	extern UART_HandleTypeDef huart6;//串口1
 /* -------------- 私有宏 ----------------- */
-#define MODILE_ID1 ((MOTOR_CAN_ID_CAL(MOTOR1_GROUP,MOTOR1_NUMBER))|0x0B)//含有运算符的宏一定要加括号
-#define MODILE_ID2 ((MOTOR_CAN_ID_CAL(MOTOR2_GROUP,MOTOR2_NUMBER))|0x0B)
-#define MODILE_ID3 ((MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR3_NUMBER))|0x0B)
-#define SPEED_LOOP_PWM			3000//速度模式电流限值
 /*   Group   取值范围 0-7
     Number  取值范围 0-15
 	其中Number==0时，为广播发送*/
@@ -47,6 +43,12 @@
 #define MOTOR2_NUMBER				2//电机2的成员号
 #define MOTOR3_GROUP				0//电机3的组号
 #define MOTOR3_NUMBER				3//电机3的成员号
+
+#define MODILE_ID1 ((MOTOR_CAN_ID_CAL(MOTOR1_GROUP,MOTOR1_NUMBER))|0x0B)//含有运算符的宏一定要加括号
+#define MODILE_ID2 ((MOTOR_CAN_ID_CAL(MOTOR2_GROUP,MOTOR2_NUMBER))|0x0B)
+#define MODILE_ID3 ((MOTOR_CAN_ID_CAL(MOTOR3_GROUP,MOTOR3_NUMBER))|0x0B)
+#define SPEED_LOOP_PWM			3000//速度模式电流限值
+
 
 	/**
 	* @Data    2019-01-19 11:45

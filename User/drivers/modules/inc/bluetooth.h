@@ -8,10 +8,10 @@
 	|           By(GCU The wold of team | 华南理工大学广州学院机器人野狼队)         |
 	|                    https://github.com/GCUWildwolfteam                      |
 	|----------------------------------------------------------------------------|
-	|--FileName    : auto_chassis.h                                                
+	|--FileName    : bluetooth.h                                                
 	|--Version     : v1.0                                                            
 	|--Author      : 海康平头哥                                                       
-	|--Date        : 2019-02-20               
+	|--Date        : 2019-03-10               
 	|--Libsupports : 
 	|--Description :                                                       
 	|--FunctionList                                                       
@@ -23,11 +23,10 @@
 	|-------2. ...                                                       
 	|-----------------------------declaration of end-----------------------------|
  **/
-#ifndef __AUTO_CHASSIS_H 
-#define __AUTO_CHASSIS_H 
-#include "chassis.h"
- void  AutoChassisControl(const dbusStruct* rc);
-#endif	// __AUTO_CHASSIS_H
+#ifndef __BLUETOOTH_H 
+#define __BLUETOOTH_H 
+
+#endif	// __BLUETOOTH_H
 /*-----------------------------------file of end------------------------------*/
 
 
