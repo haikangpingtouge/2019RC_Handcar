@@ -25,12 +25,15 @@
  **/
 #include "debug_by_keil.h" 
 #ifdef DEBUG_BY_KEIL
-#define PRINTFTASKSTATUS 
+//#define PRINTFTASKSTATUS 
+extern TIM_HandleTypeDef htim3;
  extern UART_HandleTypeDef huart2;//串口1
  extern UART_HandleTypeDef huart7;
+ extern uint8_t task_on_off;
 debugByKeilStruct pdebug_t;
 osThreadId startDebugByKeilTaskHandle; 
 void StartDebugByKeilTask(void const *argument);
+ uint32_t runtimeCounter;
 	/**
 		* @Data    2019-02-23 15:46
 		* @brief   获取局部变量的地址，用于keil硬件仿真
@@ -39,12 +42,16 @@ void StartDebugByKeilTask(void const *argument);
 		*/
 		void DebugByKeilInit(void)
 		{
+      if(task_on_off == ENABLE)
+      {
+      HAL_TIM_Base_Start_IT(&htim3);
 			/* -------- keil硬件仿真任务示任务 --------- */
-			 osThreadDef(debugByKeilTask, StartDebugByKeilTask, osPriorityBelowNormal, 0,1024);
+			 osThreadDef(debugByKeilTask, StartDebugByKeilTask, osPriorityLow, 0,1024);
        startDebugByKeilTaskHandle = osThreadCreate(osThread(debugByKeilTask), NULL); 
 //			 DebugClassInit();      
        pdebug_t.d_rc = GetRcStructAdd();
        pdebug_t.d_chassis_t = GetChassisStructAdd();
+      }
       
 		}
 /**
@@ -58,27 +65,51 @@ void StartDebugByKeilTask(void const *argument)
 #ifdef PRINTFTASKSTATUS
      uint8_t pcWriteBuffer[500];
 #endif
-  uint8_t aa=1;
 		for(;;)
 		{
 #ifdef PRINTFTASKSTATUS
+      taskENTER_CRITICAL();
         vTaskList((char *)&pcWriteBuffer);
-        printf("任务名称\t运行状态\t优先级\t剩余堆栈\t任务序号\r\n");
+        printf("任务名称     运行状态  优先级  剩余堆栈  任务序号\r\n");
         printf("-------------------------------------------------\r\n");
-        printf("%s\r\n", pcWriteBuffer); 
+        printf("%s  \r\n", pcWriteBuffer); 
         printf("-------------------------------------------------\r\n");
-        printf("B : 阻塞, R : 就绪, D : 删除, S : 暂停\r\n");
-//        memset(pcWriteBuffer, 0, 500);
-//        printf("任务名称\t运行计数\t使用率\r\n");
-//        printf("-------------------------------------------------\r\n");
-//        vTaskGetRunTimeStats((char *)&pcWriteBuffer);
-//        printf("%s\r\n", pcWriteBuffer);
-         osDelay(500);      
+        printf("B:阻塞    R:就绪    D:删除    S:暂停\r\n");
+        printf("-------------------------------------------------\r\n");
+        memset(pcWriteBuffer, 0, 500);
+        printf("任务名称\t运行计数\t使用率\r\n");
+        printf("-------------------------------------------------\r\n");
+        vTaskGetRunTimeStats((char *)&pcWriteBuffer);
+        printf("%s\r\n", pcWriteBuffer);
+        printf("-------------------------------------------------\r\n");
+        taskEXIT_CRITICAL();
+        osDelay(500);      
 #endif
-//      HAL_UART_Transmit(&huart7,&aa,1,0);
-//      osDelay(5);
+    osDelay(500);
       
 		}
+}
+/**
+* @Data    2019-02-23 15:46
+* @brief   用户定时器回调函数
+* @param   void
+* @retval  void
+*/
+void USER_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if(htim->Instance == TIM3)
+  {
+    runtimeCounter++;
+  }
+}
+void configureTimerForRunTimeStats(void)
+{
+  runtimeCounter = 0;
+}
+
+unsigned long getRunTimeCounterValue(void)
+{
+return runtimeCounter;
 }
 //	/**
 //	* @Data    2019-01-18 11:31

@@ -38,6 +38,8 @@ typedef struct debugByKeilStruct
 }debugByKeilStruct;
 void DebugByKeilInit(void);
 extern debugByKeilStruct pdebug_t;
+void USER_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+
 #endif 
 #endif	// __DEBUG_BY_KEIL_H
 /*-----------------------------------file of end------------------------------*/

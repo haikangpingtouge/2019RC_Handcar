@@ -34,7 +34,7 @@
 		{
 			int16_t temp_wheel_speed[3];
 			/* ------ 运动模型 ------- */
-			ThreeWheelMotionModel(temp_wheel_speed,-4*rc->ch1,-4*rc->ch2,-4*rc->ch3);
+			ThreeWheelMotionModel(temp_wheel_speed,rc->ch1,rc->ch2,rc->ch3);
 			/* ------ 速度分解后can发送 ------- */		
    	  MotorCanTx(temp_wheel_speed[0],temp_wheel_speed[1],temp_wheel_speed[2]);
 		}

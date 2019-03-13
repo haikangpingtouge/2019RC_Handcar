@@ -25,7 +25,7 @@
  **/
 #include "chassis.h"
 /* -------------- 结构体声明 ----------------- */
- static chassisStruct chassis_t;//底盘
+  chassisStruct chassis_t;//底盘
  static maxionStruct maxion1_t;
 	static maxionStruct maxion2_t;
 	static maxionStruct maxion3_t;
@@ -164,7 +164,7 @@
 			ConfigMode(chassis_t.pmoter_can,maxion1_t.module_id,2,0);
 			ConfigMode(chassis_t.pmoter_can,maxion2_t.module_id,2,0);
 			ConfigMode(chassis_t.pmoter_can,maxion3_t.module_id,2,0);
-			osDelay(1);//等待500ms
+			osDelay(500);//等待500ms
 			/* ------ 选择进入模式 ------- */
 			ModeSelectionMode(chassis_t.pmoter_can,(maxion1_t.module_id),mode);
 			ModeSelectionMode(chassis_t.pmoter_can,(maxion2_t.module_id),mode);
@@ -174,7 +174,6 @@
      maxion2_t.module_id |= (mode+1);
      maxion3_t.module_id |= (mode+1);
      MotorCanTx(0,0,0);
-     osDelay(500);//等待500ms
 		 	// MotorInit(chassis_t.pmoter_can,maxion1_t.module_id,mode);//电机1初始化
 			// MotorInit(chassis_t.pmoter_can,maxion2_t.module_id,mode);//电机2初始化
 			// MotorInit(chassis_t.pmoter_can,maxion3_t.module_id,mode);//电机3初始化

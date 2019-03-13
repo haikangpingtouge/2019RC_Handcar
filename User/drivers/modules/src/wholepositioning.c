@@ -133,7 +133,7 @@
 					*data_f[1] = data_u.data_f[1]; 
 					*data_f[2] = data_u.data_f[2];  
 					*data_f[3] = data_u.data_f[3];  
-					*data_f[4] = data_u.data_f[4];  
+					*data_f[4] = -data_u.data_f[4];  
 					*data_f[5] = data_u.data_f[5]; 
 					*status = HAL_OK;
 					return HAL_OK;

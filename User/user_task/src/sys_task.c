@@ -77,10 +77,10 @@ uint8_t task_on_off = 0;
     {
       task_on_off = DISABLE;
 			/* -------- 数据分析任务 --------- */
-      osThreadDef(parseTask, StartParseTask, osPriorityRealtime, 0, 256);
+      osThreadDef(parseTask, StartParseTask, osPriorityHigh, 0, 512);
       startParseTaskHandle = osThreadCreate(osThread(parseTask), NULL);	
 			/* ------ 底盘模式任务 ------- */
-			osThreadDef(chassisTask, StartChassisTask, osPriorityHigh, 0, 512);
+			osThreadDef(chassisTask, StartChassisTask, osPriorityAboveNormal, 0, 512);
       startChassisTaskHandle = osThreadCreate(osThread(chassisTask),NULL);
 //			/* ------ 云台任务 ------- */
 //			osThreadDef(gimbalTask, StartGimbalTask, osPriorityNormal, 0, 128);
@@ -130,7 +130,7 @@ void StartChassisTask(void const *argument)
 /* ------ 底盘数据初始化 ------- */
 	ChassisInit();
 /* ------ 默认底盘任务为自动模式 ------- */
-	osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,512);
+	osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,1024);
 	startAutoChassisTaskHandle=osThreadCreate(osThread(autoChassisTask),NULL);
 	flag = AUTO_MODE;
 //  printf("底盘任务初始化完毕\r\n");
@@ -145,7 +145,7 @@ void StartChassisTask(void const *argument)
 			/* -------- 删除手动底盘任务 --------- */ 
 			vTaskDelete(startRcChassisTaskHandle);
 			rc_chassis_task_status = 0;
-			osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,512);
+			osThreadDef(autoChassisTask,StartAutoChassisTask,osPriorityNormal,0,1024);
 			startAutoChassisTaskHandle=osThreadCreate(osThread(autoChassisTask),NULL);
 			flag = AUTO_MODE;
 		}
@@ -165,7 +165,7 @@ void StartChassisTask(void const *argument)
 		default:
 			break;
 		}
-		osDelay(1);
+		osDelay(5);
 	}
 }
 	/**
@@ -184,7 +184,7 @@ void StartChassisTask(void const *argument)
       {
 				RcChassisControl(pRc_t);
 				rc_chassis_task_status = 1;
-				osDelay(2);
+				osDelay(5);
 			}
 			else osDelay(1);
 		}
@@ -199,6 +199,7 @@ void StartChassisTask(void const *argument)
 	{
    const dbusStruct* pRc_t;
     pRc_t = GetRcStructAdd();
+    AutoChassisInit();
 //    printf("自动底盘任务初始化完毕\r\n");
 		for (;;)
 		{  
@@ -206,7 +207,7 @@ void StartChassisTask(void const *argument)
       {
 				AutoChassisControl(pRc_t);
 				auto_chassis_task_status = 1;
-				osDelay(2);
+				osDelay(5);
 			}
 			else osDelay(1);
 		}

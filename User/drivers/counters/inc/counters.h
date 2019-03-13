@@ -92,7 +92,7 @@ int16_t SpeedPid(speedPidStruct *sps, int16_t error);
 	HAL_StatusTypeDef CreateDataSpace(bezierStruct* bs);
 	uint32_t QuadTo(const uint8_t n,const uint32_t *point,float t);
 /* =========================== ±´Èû¶ûÇúÏß of end =========================== */
-
+void CreateSinCurve(uint32_t *s,uint16_t len,int16_t A,float w,float phi,int16_t k);
 
 #endif	// __COUNTERS_H
 	

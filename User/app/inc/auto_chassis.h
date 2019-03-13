@@ -27,6 +27,7 @@
 #define __AUTO_CHASSIS_H 
 #include "chassis.h"
  void  AutoChassisControl(const dbusStruct* rc);
+  void AutoChassisInit(void);
 #endif	// __AUTO_CHASSIS_H
 /*-----------------------------------file of end------------------------------*/
 

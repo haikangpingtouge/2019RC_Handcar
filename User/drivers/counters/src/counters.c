@@ -146,6 +146,21 @@
 		return (int16_t)(sps->pid_out);
 	}
 /* ============================ PID控制器 of end ============================ */
+  /* ============================ PID控制器 of end ============================ */
+  /**
+* @Data    2019-02-24 11:18
+* @brief   正弦曲线生成器  y=Asin(ωx+φ)+k
+* @param   uint32_t *s 生成坐标点储存地址
+* @param  uint16_t len 精度（数组长度）
+* @param   int16_t A,float w,float phi(φ),int16_t k
+* @retval  void
+*/
+void CreateSinCurve(uint32_t *s,uint16_t len,int16_t A,float w,float phi,int16_t k)
+{
+	uint16_t x=0;
+	for(x=0;x<len;x++)
+	*(s+x) = (uint32_t)((A*sin(w*x + phi))+k);
+}
 /*--------------------------------file of end---------------------------------*/
 
 
